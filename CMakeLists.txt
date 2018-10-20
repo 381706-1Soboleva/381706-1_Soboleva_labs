@@ -11,7 +11,7 @@ if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компиля
   set(CMAKE_BUILD_TYPE Release) #Если нет то устанавливаем Release
 endif()
 
-include_directories (${CMAKE_CURRENе_SOURCE_DIR}/VectorLib) #чтобы не указывать полные пути до ашников
+include_directories (${CMAKE_CURRENT_SOURCE_DIR}/VectorLib) #чтобы не указывать полные пути до ашников
 
 add_subdirectory(VectorLib)
 add_subdirectory(Vector)
