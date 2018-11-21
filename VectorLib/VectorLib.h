@@ -8,374 +8,214 @@ template <class T>
 class TVector
 {
 protected:
-  T* vector;
-  int dlina;
+	T* vector;
+	int size;
+	int StartIndex;
 public:
-  TVector();
-  TVector(TVector &A);
-  TVector(T* s, int _dlina);
-  ~TVector();
+	TVector (int s=10, int si=0);
+	TVector (const TVector<T> &v);
+	~TVector();
 
-  int GetDlina();
-  TVector<T>& DeleteVector();
-  TVector<T>& Resize(int n);
+	int GetSize();
+  int GetStartIndex();
+  T & GetValue (int pos); // доступ с контролем индекса(#П1)
+  T & operator[] (int pos); // доступ (#П2)
+  bool operator==(const TVector &v); // сравнение (#П3)
+  TVector<T> & operator= (const TVector &v); // присванивание (#О3)
 
-  TVector<T> operator+(TVector<T> &A);
-  TVector<T> operator-(TVector<T> &A);
-  T operator*(TVector<T> &A);
-  TVector<T> operator*(T a);
-  TVector<T> operator/(T a);
-  TVector<T>& operator=(TVector<T> &A);
-  T& operator[](int i);
+  // скалярные операции
+  TVector<T> operator+ (const T a); // прибавить скаляр (#Л2)
+  TVector<T> operator- (const T a); // вычесть скаляр (#С1)
+  TVector<T> operator* (const T a); // умножить на скаляр (#С2)
 
-  TVector<T>& Sort();
-  TVector<T>& Norm();
-  T OneNorm();
-  T TwoNorm();
-  T GelderNorm(int p);
-  T InfNorm();
+  // векторные операции
+  TVector<T> operator+ (const TVector &v); // сложение (#С3)
+  TVector<T> operator- (const TVector &v); // вычитание (#С4)
+  TVector<T> operator* (const TVector &v); // скалярное произведение (#С5)
 
-  template <class T>
-  friend std::istream& operator>>(std::istream& A, TVector<T>& B);
-  template <class T>
-  friend std::ostream& operator<<(std::ostream& A, TVector<T>& B);
-
-};
-// ---------------------------------------------------------------------------
-template <class T>
-TVector<T>::TVector()
+  // ввод-вывод
+	template <class T1>
+  friend istream & operator>>( istream &in, TVector<T1> &v)
+	{
+		for (int i = 0; i < v.size; i++)
+			in>>v.vector[i];
+		return in;
+	}
+	template <class T1>
+  friend ostream & operator<<( ostream &out, const TVector<T1> &v)
+	{
+		for (int i =0; i < v.size; i++)
+			out<<v.vector[i]<<"   ";
+		return out;
+	}
+}; 
+//-------------------------------------------------------------------------------------------------
+template <class T> 
+TVector<T>::TVector(int s, int si)
 {
-  vector = 0;
-  dlina = 0;
+	if (si>=0)
+	if (s>=0)
+	{
+		vector=new T [s];
+		size=s;
+		StartIndex=si;
+	}
+	else throw -1;//-1-размер вектора меньше 0
+	else throw -2;//-2-начальный индекс меньше 0
 }
-// ---------------------------------------------------------------------------
-template <class T>
-TVector<T>::TVector(TVector &A)
+//-------------------------------------------------------------------------------------------------
+template <class T> 
+TVector<T>::TVector(const TVector<T> &v)
 {
-  dlina = A.dlina;
-  if (dlina != 0)
-  {
-    vector = new T [dlina];
-    for (int i = 0; i < dlina; i++)
-      vector[i] = A.vector[i];
-  }
-  else
-    vector = 0;
+	size=v.size;
+	StartIndex=v.StartIndex;
+	vector=new T [size];
+	for (int i = 0; i<size; i++)
+		vector[i]=v.vector[i];
 }
-// ---------------------------------------------------------------------------
-template <class T>
-TVector<T>::TVector(T* s, int _dlina)
-{
-  dlina = _dlina;
-  vector = new T [dlina];
-  for (int i = 0; i < dlina; i++)
-    vector[i] = s[i];
-}
-// ---------------------------------------------------------------------------
-template <class T>
+//-------------------------------------------------------------------------------------------------
+template <class T> 
 TVector<T>::~TVector()
 {
-  dlina = 0;
-  if (vector != 0)
-    delete []vector;
+	delete [] vector;
+	size=NULL;
 }
-// ---------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 template <class T>
-int TVector<T>::GetDlina()
+int TVector<T>::GetSize() 
+{ 
+	return size; 
+} 
+//-------------------------------------------------------------------------------------------------
+template <class T>
+int TVector<T>::GetStartIndex() 
+{ 
+	return StartIndex; 
+} 
+//-------------------------------------------------------------------------------------------------
+/*template <class T>
+T& TVector<T>::GetValue(int pos)
 {
-  return dlina;
+	if (pos>=0)&&(pos<size)
+		return &vector[pos];
+	else throw 1;
+}*/
+//-------------------------------------------------------------------------------------------------
+template <class T>
+T& TVector<T>::operator [] (int pos)
+{
+	if ((pos>=0)&&(pos<size))
+		return vector[pos];
+	else throw 1;//1-выход за пределы вектора
 }
-// ---------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 template <class T>
-TVector<T>& TVector<T>::DeleteVector()
+bool TVector<T>::operator == (const TVector<T> &v)
 {
-  dlina = 0; 
-  if (vector != 0)
-    delete []vector;
-  return *this;
+	if (size==v.size)
+	{
+		for (int i = 0 ; i < size; i++)
+			if (vector[i]!=v.vector[i])
+				return false;
+		return true;
+	}
+	else throw 2;//2-разные размеры векторов
 }
-// ---------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 template <class T>
-TVector<T>& TVector<T>::Resize(int n)
+TVector<T>& TVector<T>::operator = (const TVector<T> &v)
 {
-	if ((n == dlina) || (n < 0))
-		return *this;
-	T* buff = 0;
-	if (dlina != 0)
+	if (this != &v) 
 	{
-		buff = new T [dlina];
-		for (int i = 0; i < dlina; i++)
-			buff[i] = vector[i];
-		delete []vector;
-	}
-	if (n > 0)
+		if (size != v.size) 
+		{
+			delete[] vector;
+			vector = new T[v.size];
+		}
+		size = v.size; 
+		StartIndex = v.StartIndex;
+		for (int i = 0; i < size; i++) 
+			vector[i] = v.vector[i];
+ }
+ return *this;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator + (const T a)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	for (int  i = 0; i < size; i++)
+		A.vector[i]=vector[i]+a;
+	return A;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator - (const T a)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	for (int  i= 0; i < size; i++)
+		A.vector[i]=vector[i]-a;
+	return A;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator * (const T a)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	for (int  i= 0; i < size; i++)
+		A.vector[i]=vector[i]*a;
+	return A;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator + (const TVector<T> &v)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	if (size==v.size)
 	{
-		
-		vector = new T [n];
-		for (int i = 0; i < min(n, dlina); i++)
-			vector[i] = buff[i];
-		if (dlina < n)
-		for (int i = dlina; i < n; i++)
-			vector[i] = 0;
-		dlina = n;
-		delete []buff;
+		for (int i = 0; i < size ; i++)	
+			A.vector[i]=vector[i]+v.vector[i];
+		return A;
 	}
-	else 
+	else throw 2;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator - (const TVector<T> &v)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	if (size==v.size)
 	{
-		vector = 0;
-		dlina = 0;
+		for (int i = 0; i < size ; i++)	
+			A.vector[i]=vector[i]-v.vector[i];
+		return A;
 	}
-	return *this;
+	else throw 2;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator * (const TVector<T> &v)
+{
+	TVector<T> A;
+	A.size=size;
+	A.vector=new T [size];
+	if (size==v.size)
+	{
+		for (int i = 0; i < size ; i++)	
+			A.vector[i]=vector[i]*v.vector[i];
+		return A;
 	}
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T> TVector<T>::operator+(TVector<T> &A)
-  {
-    TVector<T> S;
-    if (dlina == A.dlina)
-    {
-      if (dlina == 0)
-        S.vector = 0;
-      else
-      {
-        S.dlina = dlina;
-        S.vector = new T[dlina];
-        for (int i = 0; i < dlina; i++)
-          S.vector[i] = vector[i] + A.vector[i];
-      }
-    }
-    else
-      throw 1;
-    return S;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T> TVector<T>::operator-(TVector<T> &A)
-  {
-    TVector<T> S;
-    if (dlina == A.dlina)
-    {
-      if (dlina == 0)
-        S.vector = 0;
-      else
-      {
-        S.dlina = dlina;
-        S.vector = new T[dlina];
-        for (int i = 0; i < dlina; i++)
-          S.vector[i] = vector[i] - A.vector[i];
-      }
-    }
-    else
-      throw 1;
-    return S;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T TVector<T>::operator*(TVector<T> &A)
-  {
-    T summ = 0;
-    if (dlina == A.dlina)
-    {
-      if (dlina == 0)
-        return summ;
-      else
-      {
-        for (int i = 0; i < dlina; i++)
-          summ += vector[i] * A.vector[i];
-      }
-    }
-    else
-      throw 1;
-    return summ;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T> TVector<T>::operator*(T a)
-  {
-    TVector<T> S;
-    if (dlina == 0)
-      S.vector = 0;
-    else
-    {
-      S.dlina = dlina;
-      S.vector = new T[dlina];
-      for (int i = 0; i < dlina; i++)
-        S.vector[i] = vector[i] * a;
-    }
-    return S;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T> TVector<T>::operator/(T a)
-  {
-    TVector<T> S;
-    if (a != 0)
-    {
-      if (dlina == 0)
-        S.vector = 0;
-      else
-      {
-        S.dlina = dlina;
-        S.vector = new T[dlina];
-        for (int i = 0; i < dlina; i++)
-          S.vector[i] = vector[i] / a;
-      }
-    }
-    return S;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T>& TVector<T>::operator=(TVector<T> &A)
-  {
-    if (this != &A)
-    {
-      dlina = A.dlina;
-      if (dlina != 0)
-      {
-        if (vector != 0)
-          delete []vector;
-        vector = new T [dlina];
-        for (int i = 0; i < dlina; i++)
-          vector[i] = A.vector [i];
-      }
-      else
-      {
-        if (vector != 0)
-          delete []vector;
-        vector = 0;
-      }
-    }
-    return *this;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T& TVector<T>::operator[](int i)
-  {
-    if (i >= 0 && i <= dlina)
-      return vector[i];
-    throw 1;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  std::istream& operator>>(std::istream &A, TVector<T> &B)
-  {
-    std::cout << "Vvedite Vector:\nDlina: "; 
-	A >> B.dlina;
-    B.vector = new T [B.dlina];
-	std::cout << "Znachenie:\n"; 
-    for (int i = 0; i < B.dlina; i++)
-    {
-      A >> B.vector[i];
-    }
-    return A;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  std::ostream& operator<<(std::ostream &A, TVector<T> &B)
-  {
-    A << "dlina = "<<B.dlina << "\n";
-    for (int i = 0; i < B.dlina; i++)
-      A << B.vector[i] << " ";
-    return A;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T>& TVector<T>::Sort()
-  {
-    if (dlina != 0)
-    {
-      for(int i = 0; i < dlina - 1; i++) 
-      {
-        T min = vector[i]; 
-        int ind = i; 
-        for (int j = i + 1 ; j < dlina; j++) 
-        { 
-          if (vector[ind] > vector[j]) 
-          { 
-            min = vector[j]; 
-            ind = j; 
-          }
-        } 
-        if (i != ind) 
-        { 
-          T tmp = vector[i]; 
-          vector[i] = vector[ind]; 
-          vector[ind] = tmp; 
-        } 
-      } 
-    }
-    return *this;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  TVector<T>& TVector<T>::Norm()
-  {
-    if (dlina != 0)
-    {
-      T summ = 0;
-      for (int i = 0; i < dlina; i++)
-        summ += pow(vector[i], 2);
-      for (int i = 0; i < dlina; i++)
-        vector[i] = vector[i] / pow(summ, 0.5f);
-    } 
-    return *this;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T TVector<T>::OneNorm()
-  {
-    if (dlina != 0)
-    {
-      T rez = 0; 
-      for(int i = 0;i < dlina; i++)
-        rez += vector[i];
-      return rez;
-    }
-    else 
-      return 0;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T TVector<T>::TwoNorm()
-  {
-    if (dlina != 0)
-    {
-      T rez = 0;
-      for(int i = 0; i < dlina; i++)
-        rez += vector[i]*vector[i];
-      rez = sqrt(rez);
-      return rez;
-    }
-    else 
-      return 0;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T TVector<T>::InfNorm()
-  {
-    if (dlina != 0)
-    {
-      T max = vector[0];
-      for (int i = 1; i < dlina; i++)
-        if (max < vector[i])
-          max = vector[i];
-      return max;
-    }
-    else
-      return 0;
-  }
-  // ---------------------------------------------------------------------------
-  template <class T>
-  T TVector<T>::GelderNorm(int p)
-  {
-    if (dlina != 0)
-    {
-      T rez = 0, summ = 0;
-      for(int i = 0; i < dlina; i++)
-        summ += pow(vector[i], p);
-      rez = pow(summ, 1.0f/p);
-      return rez;
-    }
-    else 
-      return 0;
-  }
+	else throw 2;
+}
+
+	
