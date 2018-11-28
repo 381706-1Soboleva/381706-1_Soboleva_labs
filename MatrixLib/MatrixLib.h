@@ -4,22 +4,22 @@
 using namespace std;
 
 template <class T>
-class TMatrix : public TVector<TVector<T>>
+class TMatrix : public TVector<TVector<T> >
 {
 public: 
-	TMatrix<T> (int s=5); // (#О1)
-	TMatrix<T> (const TMatrix<T> &mt); // копирование (#Л1)
+	TMatrix<T> (int s=5); // (#ГЋ1)
+	TMatrix<T> (const TMatrix<T> &mt); // ГЄГ®ГЇГЁГ°Г®ГўГ Г­ГЁГҐ (#Г‹1)
 	~TMatrix();
 
 	TVector<T> operator [] (int i);
-	bool operator == (const TMatrix<T> &mt); // сравнение (#П1)
+	bool operator == (const TMatrix<T> &mt); // Г±Г°Г ГўГ­ГҐГ­ГЁГҐ (#ГЏ1)
 	bool operator != (const TMatrix<T> &mt);
-	TMatrix<T>& operator= (const TMatrix<T> &mt); // присваивание (#О2)
-	TMatrix<T> operator+ (const TMatrix<T> &mt); // сложение (#П2)
-	TMatrix<T> operator- (const TMatrix<T> &mt); // вычитание (#С1)
-	TMatrix<T> operator* (const TMatrix<T> &mt); // умножение (#С2)
+	TMatrix<T>& operator= (const TMatrix<T> &mt); // ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГҐ (#ГЋ2)
+	TMatrix<T> operator+ (const TMatrix<T> &mt); // Г±Г«Г®Г¦ГҐГ­ГЁГҐ (#ГЏ2)
+	TMatrix<T> operator- (const TMatrix<T> &mt); // ГўГ»Г·ГЁГІГ Г­ГЁГҐ (#Г‘1)
+	TMatrix<T> operator* (const TMatrix<T> &mt); // ГіГ¬Г­Г®Г¦ГҐГ­ГЁГҐ (#Г‘2)
 
-	// ввод / вывод
+	// ГўГўГ®Г¤ / ГўГ»ГўГ®Г¤
 	template <class T1>
 	friend istream & operator>>( istream &in, TMatrix<T1> &mt) 
 	{ 
@@ -37,18 +37,18 @@ public:
 };
 //-------------------------------------------------------------------------------------------------
 template <class T> 
-TMatrix<T> :: TMatrix ( int s ) : TVector<TVector<T>>(s) 
+TMatrix<T> :: TMatrix ( int s ) : TVector<TVector<T> >(s) 
 {
 	if (s>=0)
 		for ( int i = 0; i < s; i++ )
 		{
-			vector[i] = TVector<T>(s-i);
+			this->vector[i] = TVector<T>(s-i);
 		}
 	else throw -1;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // конструктор копирования
-TMatrix<T> :: TMatrix ( const TMatrix<T> &mt ) : TVector<TVector<T>>(mt.size)
+template <class T> // ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЄГ®ГЇГЁГ°Г®ГўГ Г­ГЁГї
+TMatrix<T> :: TMatrix ( const TMatrix<T> &mt ) : TVector<TVector<T> >(mt.size)
 {
 	size = mt.size;
 	for (int i = 0; i < size; i++)
@@ -69,7 +69,7 @@ TVector<T> TMatrix<T>::operator[](int i)
 	return A;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // деструктор
+template <class T> // Г¤ГҐГ±ГІГ°ГіГЄГІГ®Г°
 TMatrix<T>::~TMatrix()
 {
 	for (int i = 0; i < size; i++)
@@ -104,7 +104,7 @@ bool TMatrix<T>::operator != (const TMatrix<T> &mt)
 	else return true;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // присваивание
+template <class T> // ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГҐ
 TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
 	if ( this != &mt ) 
@@ -121,7 +121,7 @@ TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 	return *this;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // сложение
+template <class T> // Г±Г«Г®Г¦ГҐГ­ГЁГҐ
 TMatrix<T> TMatrix<T>::operator + (const TMatrix<T> &mt) 
 {
 	if (size == mt.size)
@@ -135,7 +135,7 @@ TMatrix<T> TMatrix<T>::operator + (const TMatrix<T> &mt)
 	else throw 2;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // вычитание
+template <class T> // ГўГ»Г·ГЁГІГ Г­ГЁГҐ
 TMatrix<T> TMatrix<T>::operator - (const TMatrix<T> &mt) 
 {
 	if (size == mt.size)
@@ -149,7 +149,7 @@ TMatrix<T> TMatrix<T>::operator - (const TMatrix<T> &mt)
 	else throw 2;
 }
 //-------------------------------------------------------------------------------------------------
-template <class T> // умножение
+template <class T> // ГіГ¬Г­Г®Г¦ГҐГ­ГЁГҐ
 TMatrix<T> TMatrix<T>::operator * (const TMatrix<T> &mt) 
 {
 	if (size == mt.size)
@@ -162,6 +162,6 @@ TMatrix<T> TMatrix<T>::operator * (const TMatrix<T> &mt)
 	}
 	else throw 2;
 }
-// TVector О3 Л2 П4 С6
-// TMatrix О2 Л2 П3 С3
+// TVector ГЋ3 Г‹2 ГЏ4 Г‘6
+// TMatrix ГЋ2 Г‹2 ГЏ3 Г‘3
  
