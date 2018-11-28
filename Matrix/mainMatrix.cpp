@@ -7,9 +7,13 @@ using namespace std;
 void main()
 
 {
-	TMatrix <int> A(3);
-	cin>>A;
-	TMatrix <int> B(A);
-	cout<<B[1]<<"\n";
 
+	TMatrix<int> v(3);
+	TVector<int> g(2);
+	for (int i = 0; i < v.GetSize(); i++)
+
+	g[0]=1;
+	g[1]=1;
+	cout<<v[1]<<"\n";
+	cout<<g;
 }

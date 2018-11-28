@@ -13,6 +13,7 @@ public:
 
 	TVector<T> operator [] (int i);
 	bool operator == (const TMatrix<T> &mt); // сравнение (#П1)
+	bool operator != (const TMatrix<T> &mt);
 	TMatrix<T>& operator= (const TMatrix<T> &mt); // присваивание (#О2)
 	TMatrix<T> operator+ (const TMatrix<T> &mt); // сложение (#П2)
 	TMatrix<T> operator- (const TMatrix<T> &mt); // вычитание (#С1)
@@ -90,6 +91,19 @@ bool TMatrix<T>::operator == (const TMatrix<T> &mt)
 	else return false;
 }
 //-------------------------------------------------------------------------------------------------
+template <class T>
+bool TMatrix<T>::operator != (const TMatrix<T> &mt)
+{
+	if (size == mt.size)
+	{
+		for (int i = 0; i < size; i++)
+			if (vector[i]!=mt.vector[i])
+				return true;
+		return False;
+	}
+	else return true;
+}
+//-------------------------------------------------------------------------------------------------
 template <class T> // присваивание
 TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
@@ -98,7 +112,7 @@ TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 		if ( size != mt.size ) 
 		{
 			delete[] vector;
-			vector = new TVector<T>[mt.Size];
+			vector = new TVector<T>[mt.size];
 		}
 		size = mt.size; 
 		for (int i = 0; i < size; i++) 
@@ -112,12 +126,11 @@ TMatrix<T> TMatrix<T>::operator + (const TMatrix<T> &mt)
 {
 	if (size == mt.size)
 	{
-		TMatrix<T> A;
-		A.size=size;
-		A.StartIndex=StartIndex;
+		TMatrix<T> M;
+		M.size=size;
 		for (int i = 0; i < size; i++) 
-			A.vector[i] = A.vector[i] + mt.vector[i];
-		return A;
+			M.vector[i] = vector[i]+ mt.vector[i];
+		return M;
 	}
 	else throw 2;
 }
@@ -127,12 +140,11 @@ TMatrix<T> TMatrix<T>::operator - (const TMatrix<T> &mt)
 {
 	if (size == mt.size)
 	{
-		TMatrix<T> A;
-		A.size=size;
-		A.StartIndex=StartIndex;
+		TMatrix<T> M;
+		M.size=size;
 		for (int i = 0; i < size; i++) 
-			A.vector[i] = A.vector[i] - mt.vector[i];
-		return A;
+			M.vector[i] = vector[i] - mt.vector[i];
+		return M;
 	}
 	else throw 2;
 }
@@ -142,12 +154,11 @@ TMatrix<T> TMatrix<T>::operator * (const TMatrix<T> &mt)
 {
 	if (size == mt.size)
 	{
-		TMatrix<T> A;
-		A.size=size;
-		A.StartIndex=StartIndex;
+		TMatrix<T> M;
+		M.size=size;
 		for (int i = 0; i < size; i++) 
-			A.vector[i] = A.vector[i] * mt.vector[i];
-		return A;
+			M.vector[i] = vector[i] * mt.vector[i];
+		return M;
 	}
 	else throw 2;
 }
