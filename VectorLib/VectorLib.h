@@ -10,17 +10,16 @@ class TVector
 protected:
 	T* vector;
 	int size;
-	int StartIndex;
+
 public:
-	TVector (int s=10, int si=0);
+	TVector (int s = 2 /*int si = 0*/);
 	TVector (const TVector<T> &v);
 	~TVector();
 
 	int GetSize();
-  int GetStartIndex();
-  T & GetValue (int pos); // доступ с контролем индекса(#ѕ1)
   T & operator[] (int pos); // доступ (#ѕ2)
   bool operator==(const TVector &v); // сравнение (#ѕ3)
+	bool operator!=(const TVector &v);
   TVector<T> & operator= (const TVector &v); // присванивание (#ќ3)
 
   // скал€рные операции
@@ -34,41 +33,37 @@ public:
   TVector<T> operator* (const TVector &v); // скал€рное произведение (#—5)
 
   // ввод-вывод
-	template <class T1>
-  friend istream & operator>>( istream &in, TVector<T1> &v)
+	
+  friend istream & operator>>( istream &in, TVector<T> &v)
 	{
 		for (int i = 0; i < v.size; i++)
 			in>>v.vector[i];
 		return in;
 	}
-	template <class T1>
-  friend ostream & operator<<( ostream &out, const TVector<T1> &v)
+
+  friend ostream & operator<<( ostream &out, const TVector<T> &v)
 	{
-		for (int i =0; i < v.size; i++)
+		for (int i = 0; i < v.size; i++)
 			out<<v.vector[i]<<"   ";
 		return out;
 	}
 }; 
 //-------------------------------------------------------------------------------------------------
 template <class T> 
-TVector<T>::TVector(int s, int si)
+TVector<T>::TVector(int s)
 {
-	if (si>=0)
 	if (s>=0)
 	{
 		vector=new T [s];
 		size=s;
-		StartIndex=si;
 	}
-	else throw -1;//-1-размер вектора меньше 0
-	else throw -2;//-2-начальный индекс меньше 0
+	else throw -1;// -1 - размер вектора меньше 0
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> 
 TVector<T>::TVector(const TVector<T> &v)
 {
 	size=v.size;
-	StartIndex=v.StartIndex;
 	vector=new T [size];
 	for (int i = 0; i<size; i++)
 		vector[i]=v.vector[i];
@@ -77,20 +72,17 @@ TVector<T>::TVector(const TVector<T> &v)
 template <class T> 
 TVector<T>::~TVector()
 {
-	delete [] vector;
-	size=NULL;
+	if (size != 0)
+	{
+		delete [] vector;
+		size=NULL;
+	}
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 int TVector<T>::GetSize() 
 { 
 	return size; 
-} 
-//-------------------------------------------------------------------------------------------------
-template <class T>
-int TVector<T>::GetStartIndex() 
-{ 
-	return StartIndex; 
 } 
 //-------------------------------------------------------------------------------------------------
 /*template <class T>
@@ -104,9 +96,11 @@ T& TVector<T>::GetValue(int pos)
 template <class T>
 T& TVector<T>::operator [] (int pos)
 {
-	if ((pos>=0)&&(pos<size))
-		return vector[pos];
-	else throw 1;//1-выход за пределы вектора
+	if (pos>=0)
+		if (pos<size)
+			return vector[pos];
+		else throw 1;//1-номер эл-та больше,чем размер вектора
+	else throw -1;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -119,7 +113,20 @@ bool TVector<T>::operator == (const TVector<T> &v)
 				return false;
 		return true;
 	}
-	else throw 2;//2-разные размеры векторов
+	else return false;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+bool TVector<T>::operator != (const TVector<T> &v)
+{
+	if (size==v.size)
+	{
+		for (int i = 0 ; i < size; i++)
+			if (vector[i]!=v.vector[i])
+				return true;
+		return false;
+	}
+	else return true;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -133,7 +140,6 @@ TVector<T>& TVector<T>::operator = (const TVector<T> &v)
 			vector = new T[v.size];
 		}
 		size = v.size; 
-		StartIndex = v.StartIndex;
 		for (int i = 0; i < size; i++) 
 			vector[i] = v.vector[i];
  }
@@ -185,7 +191,7 @@ TVector<T> TVector<T>::operator + (const TVector<T> &v)
 			A.vector[i]=vector[i]+v.vector[i];
 		return A;
 	}
-	else throw 2;
+	else throw 2;//2-разные размеры векторов
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
