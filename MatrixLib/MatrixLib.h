@@ -50,20 +50,20 @@ TMatrix<T> :: TMatrix ( int s ) : TVector<TVector<T> >(s)
 template <class T> // êîíñòðóêòîð êîïèðîâàíèÿ
 TMatrix<T> :: TMatrix ( const TMatrix<T> &mt ) : TVector<TVector<T> >(mt.size)
 {
-	size = mt.size;
+	this->size = mt.size;
 	for (int i = 0; i < size; i++)
 	{
-		vector[i] = mt.vector[i];
+		this->vector[i] = mt.vector[i];
 	}
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 TVector<T> TMatrix<T>::operator[](int i)
 {
-	TVector<T> A(size-i);
+	TVector<T> A(this->size-i);
 	if (i >= 0)
 		if (i < size)
-			A = vector[i];
+			A = this->vector[i];
 		else throw 1;
 	else throw -1;
 	return A;
@@ -72,19 +72,19 @@ TVector<T> TMatrix<T>::operator[](int i)
 template <class T> // äåñòðóêòîð
 TMatrix<T>::~TMatrix()
 {
-	for (int i = 0; i < size; i++)
-		if (vector[i] != 0)
+	for (int i = 0; i < this->size; i++)
+		if (this->vector[i] != 0)
 			vector[i].~TVector();
-	size=0;
+	this->size=0;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 bool TMatrix<T>::operator == (const TMatrix<T> &mt)
 {
-	if (size == mt.size)
+	if (this->size == mt.size)
 	{
 		for (int i = 0; i < size; i++)
-			if (vector[i]!=mt.vector[i])
+			if (this->vector[i]!=mt.vector[i])
 				return false;
 		return true;
 	}
@@ -94,12 +94,12 @@ bool TMatrix<T>::operator == (const TMatrix<T> &mt)
 template <class T>
 bool TMatrix<T>::operator != (const TMatrix<T> &mt)
 {
-	if (size == mt.size)
+	if (this->size == mt.size)
 	{
 		for (int i = 0; i < size; i++)
-			if (vector[i]!=mt.vector[i])
+			if (this->vector[i]!=mt.vector[i])
 				return true;
-		return False;
+		return false;
 	}
 	else return true;
 }
@@ -109,14 +109,14 @@ TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
 	if ( this != &mt ) 
 	{
-		if ( size != mt.size ) 
+		if ( this->size != mt.size ) 
 		{
-			delete[] vector;
+			delete[] this->vector;
 			vector = new TVector<T>[mt.size];
 		}
-		size = mt.size; 
+		this->size = mt.size; 
 		for (int i = 0; i < size; i++) 
-			vector[i] = mt.vector[i];
+			this->vector[i] = mt.vector[i];
 	}
 	return *this;
 }
@@ -124,12 +124,12 @@ TMatrix<T> & TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // ñëîæåíèå
 TMatrix<T> TMatrix<T>::operator + (const TMatrix<T> &mt) 
 {
-	if (size == mt.size)
+	if (this->size == mt.size)
 	{
 		TMatrix<T> M;
 		M.size=size;
 		for (int i = 0; i < size; i++) 
-			M.vector[i] = vector[i]+ mt.vector[i];
+			M.vector[i] = this->vector[i]+ mt.vector[i];
 		return M;
 	}
 	else throw 2;
@@ -138,12 +138,12 @@ TMatrix<T> TMatrix<T>::operator + (const TMatrix<T> &mt)
 template <class T> // âû÷èòàíèå
 TMatrix<T> TMatrix<T>::operator - (const TMatrix<T> &mt) 
 {
-	if (size == mt.size)
+	if (this->size == mt.size)
 	{
 		TMatrix<T> M;
 		M.size=size;
 		for (int i = 0; i < size; i++) 
-			M.vector[i] = vector[i] - mt.vector[i];
+			M.vector[i] = this->vector[i] - mt.vector[i];
 		return M;
 	}
 	else throw 2;
@@ -152,12 +152,12 @@ TMatrix<T> TMatrix<T>::operator - (const TMatrix<T> &mt)
 template <class T> // óìíîæåíèå
 TMatrix<T> TMatrix<T>::operator * (const TMatrix<T> &mt) 
 {
-	if (size == mt.size)
+	if (this->size == mt.size)
 	{
 		TMatrix<T> M;
 		M.size=size;
 		for (int i = 0; i < size; i++) 
-			M.vector[i] = vector[i] * mt.vector[i];
+			M.vector[i] = this->vector[i] * mt.vector[i];
 		return M;
 	}
 	else throw 2;
