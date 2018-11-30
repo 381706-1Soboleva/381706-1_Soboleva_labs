@@ -1,6 +1,6 @@
 #include "MatrixLib.h"
 #include "VectorLib.h"
-#include <iostream>
+/*#include <iostream>
 
 using namespace std;
 
@@ -16,4 +16,4 @@ void main()
 	g[1]=1;
 	cout<<v[1]<<"\n";
 	cout<<g;
-}
+}*/
