@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-using namespace std;
+/*using namespace std;
 void main()
 {
 	TVector<int> A(3), B(A);
@@ -13,4 +13,4 @@ void main()
 	B=A+1;
 	cout<<B<<"\n";
 	cout<<A*B<<"\n";
-}
+}*/
