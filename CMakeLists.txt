@@ -10,6 +10,8 @@ set (Test Test)
 set (MatrixLib MatrixLib)
 set (Matrix Matrix)
 
+set(LAB_TESTS   "test_${PROJECT_NAME}")
+
 
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
