@@ -10,7 +10,7 @@ set (Test Test)
 set (MatrixLib MatrixLib)
 set (Matrix Matrix)
 
-#set(LAB_TESTS   "test_${PROJECT_NAME}")
+
 
 
 
@@ -27,6 +27,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest) #чтобы не указывать полные пути до ашников
 
+set(LAB_TESTS  "test_${PROJECT_NAME}")
 
 add_subdirectory(VectorLib)
 add_subdirectory(Vector)
