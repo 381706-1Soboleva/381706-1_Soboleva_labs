@@ -3,5 +3,5 @@ file(GLOB srcs "*.cpp") #Добавляем в переменную srcs все 
 
 add_executable(${Matrix} ${srcs} ${hdrs}) #Создаем проект с именем из переменной ${PROJECT_NAME}, в него добавляются файлы из переменных ${srcs} и ${hdrs}
 
-target_link_libraries(${Matrix} ${MatrixLib})
-target_link_libraries(${Matrix} ${VectorLib})
+#target_link_libraries(${Matrix} ${MatrixLib})
+#target_link_libraries(${Matrix} ${VectorLib})
