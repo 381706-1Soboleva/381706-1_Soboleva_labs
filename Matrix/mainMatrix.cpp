@@ -1,6 +1,6 @@
-#include "MatrixLib.h"
+/*#include "MatrixLib.h"
 #include "VectorLib.h"
-/*#include <iostream>
+#include <iostream>
 
 using namespace std;
 
