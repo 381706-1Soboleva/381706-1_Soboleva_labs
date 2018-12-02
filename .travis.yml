@@ -8,6 +8,6 @@ before_script:
 script:
   - cmake ../381706-1_Soboleva_labs
   - make -j
-  - ./bin/test_381706-1_Soboleva_labs
+  - cd ../bin
 notifications:
   email: false
