@@ -24,7 +24,8 @@ endif()
 include_directories (
 ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
-${CMAKE_CURRENT_SOURCE_DIR}/gtest) #чтобы не указывать полные пути до ашников
+${CMAKE_CURRENT_SOURCE_DIR}/gtest
+) #чтобы не указывать полные пути до ашников
 
 
 add_subdirectory(VectorLib)
