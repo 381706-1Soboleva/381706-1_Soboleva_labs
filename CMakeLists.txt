@@ -19,13 +19,20 @@ endif()
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE})
 
-#set(MP2_TESTS   "test_${PROJECT_NAME}")
+set(LAB_TESTS   "test_${PROJECT_NAME}")
+
+#include_directories (
+#${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
+#${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
+#${CMAKE_CURRENT_SOURCE_DIR}/gtest
+#) #чтобы не указывать полные пути до ашников
 
 include_directories (
-${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
-${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
+"${VectorLib}" gtest
+"${MatrixLib}" gtest
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
-) #чтобы не указывать полные пути до ашников
+)
+
 
 
 add_subdirectory(VectorLib)
