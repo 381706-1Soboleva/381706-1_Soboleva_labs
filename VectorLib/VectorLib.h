@@ -12,9 +12,9 @@ protected:
 	int size;
 
 public:
-	TVector (int s = 2 /*int si = 0*/);
-	TVector (const TVector<T> &v);
-	~TVector ();
+	TVector<T> (int s = 2 /*int si = 0*/);
+	TVector<T> (const TVector<T> &v);
+	~TVector<T> ();
 
 	int GetSize();
   T & operator[] (int pos); // äîñòóï (#Ï2)
@@ -69,8 +69,8 @@ TVector<T>::TVector(const TVector<T> &v)
 		vector[i]=v.vector[i];
 }
 //-------------------------------------------------------------------------------------------------
-//template <class T> 
-TVector::~TVector()
+template <class T> 
+TVector<T>::~TVector()
 {
 	if (size != 0)
 	{
