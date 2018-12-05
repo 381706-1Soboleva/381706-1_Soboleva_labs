@@ -41,12 +41,32 @@ TEST(VectorLib, throws_when_position_is_negative)
   ASSERT_ANY_THROW(a=v[-3]);
 }
 //-------------------------------------------------------------------------------------------------
-TEST(VectorLib, can_compare_vectors_of_equal_size)
+TEST(VectorLib, can_compare_vectors_of_equal_size_1)
 {
 	TVector<int> v(1), v1(1);
 	v[0]=1;
 	v1[0]=1;
 	EXPECT_EQ(1,v==v1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_compare_vectors_of_equal_size_2)
+{
+	TVector<int> v(1), v1(1);
+	v[0]=1;
+	v1[0]=2;
+	EXPECT_EQ(1,v!=v1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_compare_vectors_of_different_size_1)
+{
+	TVector<int> v(1), v1(2);
+	EXPECT_EQ(0,v==v1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_compare_vectors_of_different_size_2)
+{
+	TVector<int> v(1), v1(2);
+	EXPECT_EQ(1,v!=v1);
 }
 //-------------------------------------------------------------------------------------------------
 TEST(VectorLib, can_assign_vector)

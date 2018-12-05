@@ -11,7 +11,7 @@ public:
 	TMatrix<T> (const TMatrix<T> &mt); // êîïèðîâàíèå (#Ë1)
 	~TMatrix<T>();
 
-	TVector<T> operator [] (int i);
+	TVector<T>& operator [] (int i);
 	bool operator == (const TMatrix<T> &mt); // ñðàâíåíèå (#Ï1)
 	bool operator != (const TMatrix<T> &mt);
 	TMatrix<T>& operator= (const TMatrix<T> &mt); // ïðèñâàèâàíèå (#Î2)
@@ -58,15 +58,13 @@ TMatrix<T> :: TMatrix ( const TMatrix<T> &mt ) : TVector<TVector<T> >(mt.size)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-TVector<T> TMatrix<T>::operator[](int i)
+TVector<T>& TMatrix<T>::operator[](int i)
 {
-	TVector<T> A(this->size-i);
 	if (i >= 0)
 		if (i < this->size)
-			A = this->vector[i];
+			return this->vector[i];
 		else throw 1;
 	else throw -1;
-	return A;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> // äåñòðóêòîð
