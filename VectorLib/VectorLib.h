@@ -17,22 +17,22 @@ public:
 	~TVector();
 
 	int GetSize();
-  T & operator[] (int pos); // доступ (#П2)
-  bool operator==(const TVector &v); // сравнение (#П3)
+  T & operator[] (int pos); // Г¤Г®Г±ГІГіГЇ (#ГЏ2)
+  bool operator==(const TVector &v); // Г±Г°Г ГўГ­ГҐГ­ГЁГҐ (#ГЏ3)
 	bool operator!=(const TVector &v);
-  TVector<T> & operator= (const TVector &v); // присванивание (#О3)
+  TVector<T> & operator= (const TVector &v); // ГЇГ°ГЁГ±ГўГ Г­ГЁГўГ Г­ГЁГҐ (#ГЋ3)
 
-  // скалярные операции
-  TVector<T> operator+ (const T a); // прибавить скаляр (#Л2)
-  TVector<T> operator- (const T a); // вычесть скаляр (#С1)
-  TVector<T> operator* (const T a); // умножить на скаляр (#С2)
+  // Г±ГЄГ Г«ГїГ°Г­Г»ГҐ Г®ГЇГҐГ°Г Г¶ГЁГЁ
+  TVector<T> operator+ (const T a); // ГЇГ°ГЁГЎГ ГўГЁГІГј Г±ГЄГ Г«ГїГ° (#Г‹2)
+  TVector<T> operator- (const T a); // ГўГ»Г·ГҐГ±ГІГј Г±ГЄГ Г«ГїГ° (#Г‘1)
+  TVector<T> operator* (const T a); // ГіГ¬Г­Г®Г¦ГЁГІГј Г­Г  Г±ГЄГ Г«ГїГ° (#Г‘2)
 
-  // векторные операции
-  TVector<T> operator+ (const TVector &v); // сложение (#С3)
-  TVector<T> operator- (const TVector &v); // вычитание (#С4)
-  TVector<T> operator* (const TVector &v); // скалярное произведение (#С5)
+  // ГўГҐГЄГІГ®Г°Г­Г»ГҐ Г®ГЇГҐГ°Г Г¶ГЁГЁ
+  TVector<T> operator+ (const TVector &v); // Г±Г«Г®Г¦ГҐГ­ГЁГҐ (#Г‘3)
+  TVector<T> operator- (const TVector &v); // ГўГ»Г·ГЁГІГ Г­ГЁГҐ (#Г‘4)
+  TVector<T> operator* (const TVector &v); // Г±ГЄГ Г«ГїГ°Г­Г®ГҐ ГЇГ°Г®ГЁГ§ГўГҐГ¤ГҐГ­ГЁГҐ (#Г‘5)
 
-  // ввод-вывод
+  // ГўГўГ®Г¤-ГўГ»ГўГ®Г¤
 	
   friend istream & operator>>( istream &in, TVector<T> &v)
 	{
@@ -57,7 +57,7 @@ TVector<T>::TVector(int s)
 		vector=new T [s];
 		size=s;
 	}
-	else throw -1;// -1 - размер вектора меньше 0
+	else throw -1;// -1 - Г°Г Г§Г¬ГҐГ° ГўГҐГЄГІГ®Г°Г  Г¬ГҐГ­ГјГёГҐ 0
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> 
@@ -70,12 +70,12 @@ TVector<T>::TVector(const TVector<T> &v)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> 
-TVector<T>::~TVector()
+TVector::~TVector()
 {
 	if (size != 0)
 	{
 		delete [] vector;
-		size=NULL;
+		size=0;
 	}
 }
 //-------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ T& TVector<T>::operator [] (int pos)
 	if (pos>=0)
 		if (pos<size)
 			return vector[pos];
-		else throw 1;//1-номер эл-та больше,чем размер вектора
+		else throw 1;//1-Г­Г®Г¬ГҐГ° ГЅГ«-ГІГ  ГЎГ®Г«ГјГёГҐ,Г·ГҐГ¬ Г°Г Г§Г¬ГҐГ° ГўГҐГЄГІГ®Г°Г 
 	else throw -1;
 }
 //-------------------------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ TVector<T> TVector<T>::operator + (const TVector<T> &v)
 			A.vector[i]=vector[i]+v.vector[i];
 		return A;
 	}
-	else throw 2;//2-разные размеры векторов
+	else throw 2;//2-Г°Г Г§Г­Г»ГҐ Г°Г Г§Г¬ГҐГ°Г» ГўГҐГЄГІГ®Г°Г®Гў
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
