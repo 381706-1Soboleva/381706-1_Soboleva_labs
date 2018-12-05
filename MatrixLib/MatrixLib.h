@@ -9,7 +9,7 @@ class TMatrix : public TVector<TVector<T> >
 public: 
 	TMatrix<T> (int s=5); // (#Î1)
 	TMatrix<T> (const TMatrix<T> &mt); // êîïèðîâàíèå (#Ë1)
-	~TMatrix();
+	~TMatrix<T>();
 
 	TVector<T> operator [] (int i);
 	bool operator == (const TMatrix<T> &mt); // ñðàâíåíèå (#Ï1)
@@ -70,7 +70,7 @@ TVector<T> TMatrix<T>::operator[](int i)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> // äåñòðóêòîð
-TMatrix::~TMatrix()
+TMatrix<T>::~TMatrix()
 {
 	for (int i = 0; i < this->size; i++)
 		if (this->vector[i] != 0)
