@@ -70,7 +70,7 @@ TVector<T> TMatrix<T>::operator[](int i)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> // äåñòðóêòîð
-TMatrix<T>::~TMatrix()
+TMatrix::~TMatrix()
 {
 	for (int i = 0; i < this->size; i++)
 		if (this->vector[i] != 0)
