@@ -85,14 +85,6 @@ int TVector<T>::GetSize()
 	return size; 
 } 
 //-------------------------------------------------------------------------------------------------
-/*template <class T>
-T& TVector<T>::GetValue(int pos)
-{
-	if (pos>=0)&&(pos<size)
-		return &vector[pos];
-	else throw 1;
-}*/
-//-------------------------------------------------------------------------------------------------
 template <class T>
 T& TVector<T>::operator [] (int pos)
 {
