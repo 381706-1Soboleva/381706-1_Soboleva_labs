@@ -9,6 +9,9 @@ set(VectorLib VectorLib)
 set (Test Test)
 set (MatrixLib MatrixLib)
 set (Matrix Matrix)
+set (StackLib StackLib)
+set (Stack Stack)
+
 
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
@@ -23,6 +26,7 @@ endif()
 include_directories (
 ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
+${CMAKE_CURRENT_SOURCE_DIR}/StackLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) #чтобы не указывать полные пути до ашников
 
@@ -35,6 +39,8 @@ add_subdirectory(Vector)
 add_subdirectory(Test)
 add_subdirectory(MatrixLib)
 add_subdirectory(Matrix)
+add_subdirectory(StackLib)
+add_subdirectory(Stack)
 add_subdirectory(gtest)
 
 
