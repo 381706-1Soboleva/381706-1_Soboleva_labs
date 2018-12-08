@@ -12,27 +12,26 @@ protected:
 	int size;
 
 public:
-	TVector<T> (int s = 2 /*int si = 0*/);
+	TVector<T> (int s = 2);
 	TVector<T> (const TVector<T> &v);
 	~TVector<T> ();
 
 	int GetSize();
-  T & operator[] (int pos); // äîñòóï (#Ï2)
-  bool operator==(const TVector &v); // ñðàâíåíèå (#Ï3)
+  T & operator[] (int pos);
+  bool operator==(const TVector &v); 
 	bool operator!=(const TVector &v);
-  TVector<T> & operator= (const TVector &v); // ïðèñâàíèâàíèå (#Î3)
+  TVector<T> & operator= (const TVector &v); 
 
-  // ñêàëÿðíûå îïåðàöèè
-  TVector<T> operator+ (const T a); // ïðèáàâèòü ñêàëÿð (#Ë2)
-  TVector<T> operator- (const T a); // âû÷åñòü ñêàëÿð (#Ñ1)
-  TVector<T> operator* (const T a); // óìíîæèòü íà ñêàëÿð (#Ñ2)
+  
+  TVector<T> operator+ (const T a); 
+  TVector<T> operator- (const T a); 
+  TVector<T> operator* (const T a); 
 
-  // âåêòîðíûå îïåðàöèè
-  TVector<T> operator+ (const TVector &v); // ñëîæåíèå (#Ñ3)
-  TVector<T> operator- (const TVector &v); // âû÷èòàíèå (#Ñ4)
-  TVector<T> operator* (const TVector &v); // ñêàëÿðíîå ïðîèçâåäåíèå (#Ñ5)
 
-  // ââîä-âûâîä
+  TVector<T> operator+ (const TVector &v); 
+  TVector<T> operator- (const TVector &v);
+  TVector<T> operator* (const TVector &v); 
+
 	
   friend istream & operator>>( istream &in, TVector<T> &v)
 	{
@@ -52,21 +51,27 @@ public:
 template <class T> 
 TVector<T>::TVector(int s)
 {
-	if (s>=0)
+	if (s < 0)
+		throw -1;// -1 - size is less than zero
+	else if (s == 0)
 	{
-		vector=new T [s];
-		size=s;
+		size = 0;
+		vector = 0;
 	}
-	else throw -1;// -1 - ðàçìåð âåêòîðà ìåíüøå 0
+	else
+	{
+		vector = new T [s];
+		size = s;
+	} 
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> 
 TVector<T>::TVector(const TVector<T> &v)
 {
-	size=v.size;
-	vector=new T [size];
+	size = v.size;
+	vector = new T [size];
 	for (int i = 0; i<size; i++)
-		vector[i]=v.vector[i];
+		vector[i] = v.vector[i];
 }
 //-------------------------------------------------------------------------------------------------
 template <class T> 
@@ -75,7 +80,7 @@ TVector<T>::~TVector()
 	if (size != 0)
 	{
 		delete [] vector;
-		size=0;
+		size = 0;
 	}
 }
 //-------------------------------------------------------------------------------------------------
@@ -88,20 +93,20 @@ int TVector<T>::GetSize()
 template <class T>
 T& TVector<T>::operator [] (int pos)
 {
-	if (pos>=0)
-		if (pos<size)
+	if (pos >= 0)
+		if (pos < size)
 			return vector[pos];
-		else throw 1;//1-íîìåð ýë-òà áîëüøå,÷åì ðàçìåð âåêòîðà
+		else throw 1;//1- more than size
 	else throw -1;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 bool TVector<T>::operator == (const TVector<T> &v)
 {
-	if (size==v.size)
+	if (size == v.size)
 	{
 		for (int i = 0 ; i < size; i++)
-			if (vector[i]!=v.vector[i])
+			if (vector[i] != v.vector[i])
 				return false;
 		return true;
 	}
@@ -111,10 +116,10 @@ bool TVector<T>::operator == (const TVector<T> &v)
 template <class T>
 bool TVector<T>::operator != (const TVector<T> &v)
 {
-	if (size==v.size)
+	if (size == v.size)
 	{
 		for (int i = 0 ; i < size; i++)
-			if (vector[i]!=v.vector[i])
+			if (vector[i] != v.vector[i])
 				return true;
 		return false;
 	}
@@ -142,10 +147,10 @@ template <class T>
 TVector<T> TVector<T>::operator + (const T a)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
+	A.size = size;
+	A.vector = new T [size];
 	for (int  i = 0; i < size; i++)
-		A.vector[i]=vector[i]+a;
+		A.vector[i] = vector[i] + a;
 	return A;
 }
 //-------------------------------------------------------------------------------------------------
@@ -153,10 +158,10 @@ template <class T>
 TVector<T> TVector<T>::operator - (const T a)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
-	for (int  i= 0; i < size; i++)
-		A.vector[i]=vector[i]-a;
+	A.size = size;
+	A.vector = new T [size];
+	for (int  i = 0; i < size; i++)
+		A.vector[i] = vector[i] - a;
 	return A;
 }
 //-------------------------------------------------------------------------------------------------
@@ -164,10 +169,10 @@ template <class T>
 TVector<T> TVector<T>::operator * (const T a)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
-	for (int  i= 0; i < size; i++)
-		A.vector[i]=vector[i]*a;
+	A.size = size;
+	A.vector = new T [size];
+	for (int  i = 0; i < size; i++)
+		A.vector[i] = vector[i] * a;
 	return A;
 }
 //-------------------------------------------------------------------------------------------------
@@ -175,27 +180,27 @@ template <class T>
 TVector<T> TVector<T>::operator + (const TVector<T> &v)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
-	if (size==v.size)
+	A.size = size;
+	A.vector = new T [size];
+	if (size == v.size)
 	{
 		for (int i = 0; i < size ; i++)	
-			A.vector[i]=vector[i]+v.vector[i];
+			A.vector[i] = vector[i] + v.vector[i];
 		return A;
 	}
-	else throw 2;//2-ðàçíûå ðàçìåðû âåêòîðîâ
+	else throw 2;//2-different sizes
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 TVector<T> TVector<T>::operator - (const TVector<T> &v)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
-	if (size==v.size)
+	A.size = size;
+	A.vector = new T [size];
+	if (size == v.size)
 	{
 		for (int i = 0; i < size ; i++)	
-			A.vector[i]=vector[i]-v.vector[i];
+			A.vector[i] = vector[i] - v.vector[i];
 		return A;
 	}
 	else throw 2;
@@ -205,12 +210,12 @@ template <class T>
 TVector<T> TVector<T>::operator * (const TVector<T> &v)
 {
 	TVector<T> A;
-	A.size=size;
-	A.vector=new T [size];
-	if (size==v.size)
+	A.size = size;
+	A.vector = new T [size];
+	if (size == v.size)
 	{
 		for (int i = 0; i < size ; i++)	
-			A.vector[i]=vector[i]*v.vector[i];
+			A.vector[i] = vector[i] * v.vector[i];
 		return A;
 	}
 	else throw 2;
