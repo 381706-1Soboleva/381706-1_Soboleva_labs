@@ -38,7 +38,7 @@ public:
 template <class T> 
 TMatrix<T> :: TMatrix ( int s ) : TVector<TVector<T> >(s) 
 {
-	if (s>=0)
+	if (s >= 0)
 		for ( int i = 0; i < s; i++ )
 		{
 			this->vector[i] = TVector<T>(s-i);
