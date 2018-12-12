@@ -34,7 +34,7 @@ TQueue<T>::TQueue(int _size): TStack<T>(_size)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-TQueue<T>::TQueue(TQueue <T> &A): TStack(A.size)
+TQueue<T>::TQueue(TQueue <T> &A): TStack<T>(A.size)
 {
 	start = 0;
 	this->size = A.size;
@@ -47,7 +47,7 @@ TQueue<T>::TQueue(TQueue <T> &A): TStack(A.size)
 template <class T>
 bool TQueue<T>::IsFull()
 {
-	if (this->top - start == size)
+	if (this->top - start == this->size)
 		return true;
 	else return false;
 }
@@ -67,8 +67,8 @@ void TQueue<T>::Put(T A)
 		throw -4;
 	else
 	{
-		this->m[top] = A;
-		top++;
+		this->m[start + this->top] = A;
+		this->top++;
 	}
 }
 //-------------------------------------------------------------------------------------------------
@@ -81,6 +81,6 @@ T TQueue<T>::Get()
 	{
 		return this->m[start];
 		start++;
-		top++;
+		this->top++;
 	}
 }
