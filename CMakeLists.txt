@@ -11,6 +11,8 @@ set (MatrixLib MatrixLib)
 set (Matrix Matrix)
 set (StackLib StackLib)
 set (Stack Stack)
+set (QueueLib QueueLib)
+set (Queue Queue)
 set (ListLib ListLib)
 set (List List)
 
@@ -29,6 +31,7 @@ include_directories (
 ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
 ${CMAKE_CURRENT_SOURCE_DIR}/StackLib
+${CMAKE_CURRENT_SOURCE_DIR}/QueueLib
 ${CMAKE_CURRENT_SOURCE_DIR}/ListLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) #чтобы не указывать полные пути до ашников
@@ -43,6 +46,8 @@ add_subdirectory(MatrixLib)
 add_subdirectory(Matrix)
 add_subdirectory(StackLib)
 add_subdirectory(Stack)
+add_subdirectory(QueueLib)
+add_subdirectory(Queue)
 add_subdirectory(ListLib)
 add_subdirectory(List)
 add_subdirectory(Test)
