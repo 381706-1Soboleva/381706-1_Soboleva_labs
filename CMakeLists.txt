@@ -4,13 +4,17 @@ set(PROJECT_NAME 381706-1_Soboleva_labs) #Создаем обычную лока
 
 project(${PROJECT_NAME}) # Название проекта
 
-set(Vector Vector) #Переменная с именем библиотеки
-set(VectorLib VectorLib)
+set (Vector Vector) #Переменная с именем библиотеки
+set (VectorLib VectorLib)
 set (Test Test)
 set (MatrixLib MatrixLib)
 set (Matrix Matrix)
 set (StackLib StackLib)
 set (Stack Stack)
+set (ListLib ListLib)
+set (List List)
+
+
 
 
 
@@ -19,14 +23,13 @@ if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компиля
    set(CMAKE_BUILD_TYPE Release) #Если нет то устанавливаем Release
 endif()
 
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE})
 
 
 include_directories (
 ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
 ${CMAKE_CURRENT_SOURCE_DIR}/StackLib
+${CMAKE_CURRENT_SOURCE_DIR}/ListLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) #чтобы не указывать полные пути до ашников
 
@@ -36,11 +39,13 @@ ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 
 add_subdirectory(VectorLib)
 add_subdirectory(Vector)
-add_subdirectory(Test)
 add_subdirectory(MatrixLib)
 add_subdirectory(Matrix)
 add_subdirectory(StackLib)
 add_subdirectory(Stack)
+add_subdirectory(ListLib)
+add_subdirectory(List)
+add_subdirectory(Test)
 add_subdirectory(gtest)
 
 
