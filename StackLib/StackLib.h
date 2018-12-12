@@ -59,7 +59,7 @@ template <class T>
 void TStack<T>::Put(T A)
 {
 	if (IsFull())
-		throw -3;
+		throw -4;// -4-put to full
 	else
 	{
 		m[top] = A;
@@ -71,7 +71,7 @@ template <class T>
 T TStack<T>::Get()
 {
 	if (IsEmpty())
-		throw -3;
+		throw -3;// -3-get from empty
 	else
 	{
 		top--;
