@@ -43,8 +43,8 @@ TEST(MatrixLib, throws_when_position_is_too_large)
 TEST(MatrixLib, can_compare_matrixs_of_equal_size_1)
 {
 	TMatrix<int> v(1), v1(1);
-	v[0]=(TVector<int>)1;
-	v1[0]=(TVector<int>)1;
+	v[0][0]=1;
+	v1[0][0]=1;
 	EXPECT_EQ(1,v==v1);
 }
 //-------------------------------------------------------------------------------------------------
