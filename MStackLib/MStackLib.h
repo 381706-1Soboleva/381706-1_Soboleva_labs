@@ -48,7 +48,7 @@ TMStack<T>::TMStack (int _n, int l)
 		int *A = new int [n];
 		T** B = new T* [n];
 		for (int i = 0; i < n; i++)
-			A[i] = (int) floor ((double) (size / n)); 
+			A[i] = (int) size / n; 
 		A[n - 1] += size % n;
 		B[0] = mas;
 		for (int i = 1; i < n; i++)
@@ -110,7 +110,7 @@ void TMStack<T>::Repack(int k)
 		T** new_start = new T* [n];
 		T** old_start = new T* [n];
 		for (int i = 0; i < n; i++)
-			new_size[i] = (int)floor((double)(fm / n)) + m[i]->GetSize();
+			new_size[i] = (int)(fm / n) + m[i]->GetSize();
 		new_size[k] += fm % n;
 		new_start[0] = old_start[0] = mas;
 		for (int i = 1; i < n; i++)
