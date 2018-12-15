@@ -11,4 +11,8 @@ target_link_libraries(${Test} ${StackLib} gtest )
 target_link_libraries(${Test} ${MStackLib} gtest )
 target_link_libraries(${Test} ${QueueLib} gtest )
 target_link_libraries(${Test} ${ListLib} gtest )
+target_link_libraries(${Test} ${ListMasLib} gtest )
+target_link_libraries(${Test} ${StackListLib} gtest )
+target_link_libraries(${Test} ${PolyLib} gtest )
+target_link_libraries(${Test} ${ObrPolLib} gtest )
 

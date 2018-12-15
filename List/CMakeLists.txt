@@ -4,5 +4,5 @@ file(GLOB srcs "*.cpp") #Добавляем в переменную srcs все 
 add_executable(${List} ${srcs} ${hdrs}) #Создаем проект с именем из переменной ${PROJECT_NAME}, в него добавляются файлы из переменных ${srcs} и ${hdrs}
 
 target_link_libraries(${List} ${ListLib})
-target_link_libraries(${List} ${ElemLib})
+
 
