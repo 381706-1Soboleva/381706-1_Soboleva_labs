@@ -62,7 +62,7 @@ TEST(ListMasLib, throws_when_get_end_from_empty_listmas)
 //-------------------------------------------------------------------------------------------------
 TEST(ListMasLib, put_end_gives_right_answer)
 {
-	TListMas<int> c(7);
+	TListMas<int> c(1);
 	c.PutEnd(5);
 	EXPECT_EQ (5, c.GetEnd());
 }
