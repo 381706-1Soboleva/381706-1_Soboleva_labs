@@ -103,7 +103,7 @@ void TListMas<T>::PutEnd(T B)
 			{
 				mas[i] = B;
 				for (int j = 0; j < size; j++)
-					if (index[i] == -1)
+					if (index[j] == -1)
 						index[j] = i;
 				index[i] = -1;
 				count++;
