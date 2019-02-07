@@ -49,8 +49,9 @@ TEST(ListMasLib, can_put_end)
 //-------------------------------------------------------------------------------------------------
 TEST(ListMasLib, can_get_end)
 {
-	TListMas<int> c(1);
-	c.PutEnd(3);
+	TListMas<int> c(2);
+	c.PutStart(3);
+	c.PutEnd(5);
 	ASSERT_NO_THROW (int a = c.GetEnd());
 }
 //-------------------------------------------------------------------------------------------------
@@ -62,7 +63,8 @@ TEST(ListMasLib, throws_when_get_end_from_empty_listmas)
 //-------------------------------------------------------------------------------------------------
 TEST(ListMasLib, put_end_gives_right_answer)
 {
-	TListMas<int> c(1);
+	TListMas<int> c(2);
+	c.PutStart(3);
 	c.PutEnd(5);
 	EXPECT_EQ (5, c.GetEnd());
 }

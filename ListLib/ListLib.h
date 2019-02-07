@@ -19,8 +19,7 @@ public:
 
 	T GetBegin();
 	T GetEnd();
-	T GetElem(T* A);
-	T* GetInd(T A);
+	int GetCount();
 
 	bool IsFull();
 	bool IsEmpty();
@@ -128,32 +127,20 @@ T TList<T>::GetEnd()
 		return tmp;
 	}
 }
-/*
 //-------------------------------------------------------------------------------------------------
 template <class T>
-T TList<T>::GetElem(T* A)
+int TList<T>::GetCount()
 {
-	TElem<T>* a = begin, *b;
-	T tmp;
-	while (a->GetD() != A)
-		a->GetNext();
-	b = a->GetNext();
-	tmp = b->GetD();
-	return tmp;
-	delete a;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-T* TList<T>::GetInd(T A)
-{
+	int count = 1;
 	TElem<T>* a = begin;
-	int k = 0;
-	while (k != A)
-	{
-		a->GetNext();
-		k++;
-	}	
-	return a->GetD();
-	delete a;
+	if (IsEmpty())
+		return 0;
+	else 
+		while (a->GetNext() != 0)
+		{
+			a = a->GetNext();
+			count++;
+		}
+		delete a;
+		return count;
 }
-*/

@@ -128,7 +128,7 @@ T TListMas<T>::GetStart()
 	}
 }
 //-------------------------------------------------------------------------------------------------
-template <class T>//dont understand
+template <class T>
 T TListMas<T>::GetEnd()
 {
 	if (IsEmpty())
@@ -140,7 +140,7 @@ T TListMas<T>::GetEnd()
 		while (index[index2] != -1)
 		{
 			index1 = index2;
-			index2=index[index2];
+			index2 = index[index2];
 		}
 		index[index1] = -1;
 		count--;

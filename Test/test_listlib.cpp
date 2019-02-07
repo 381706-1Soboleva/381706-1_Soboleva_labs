@@ -80,6 +80,14 @@ TEST (ListLib, isempty_gives_right_answer)
 	TList<int> A;
 	EXPECT_EQ (true, A.IsEmpty());
 }
+//-------------------------------------------------------------------------------------------------
+TEST (ListLib, can_get_count)
+{
+	TList<int> A;
+	A.PutBegin(5);
+	A.PutBegin(3);
+	EXPECT_EQ (2, A.GetCount());
+}
 /*
 //-------------------------------------------------------------------------------------------------
 TEST(ListLib, can_get_elem)
