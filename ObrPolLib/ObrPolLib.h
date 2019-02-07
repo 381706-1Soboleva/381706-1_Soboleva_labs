@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include"QueueLib.h"
 #include<iostream>
 
@@ -178,4 +178,4 @@ double f(TQueue<char> q)
 	}
 	res = st2.Get();
 	return res;
-}
+}*/
