@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*#pragma once
 #include"QueueLib.h"
 #include<iostream>
@@ -179,3 +180,6 @@ double f(TQueue<char> q)
   res = st2.Get();
   return res;
 }*/
+=======
+
+>>>>>>> ed8ecac2ad30ca330f560296e74aa6d12ac59290
