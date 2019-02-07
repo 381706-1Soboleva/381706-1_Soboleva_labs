@@ -7,7 +7,7 @@ class TStackList : public TList<T>
 {
 protected:
   int size;
-	int count;
+  int count;
 
 public:
 
@@ -17,7 +17,7 @@ public:
   void Put(T A);
   T Get();
   int GetSize();
-	int GetCount();
+  int GetCount();
   bool IsEmpty();
   bool IsFull();
 };
@@ -28,7 +28,7 @@ TStackList<T>::TStackList(int _size) : TList<T>()
   if (_size <= 0)
     throw -1;
   size = _size;
-	count = 0;
+  count = 0;
 }
 //-----------------------------------------------------------------
 template <class T>
@@ -43,7 +43,7 @@ void TStackList<T>::Put(T A)
   if (this->IsFull())
     throw 1;
   TList<T>::PutBegin(A);
-	count++;
+  count++;
 }
 //-----------------------------------------------------------------
 template <class T>
@@ -52,7 +52,7 @@ T TStackList<T>::Get()
   if (this->IsEmpty())
     throw -1;
   return TList<T>::GetBegin();
-	count--;
+  count--;
 }
 //-----------------------------------------------------------------
 template <class T>
