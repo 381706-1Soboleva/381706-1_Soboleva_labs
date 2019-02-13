@@ -15,6 +15,13 @@ TEST(MatrixLib, can_create_copy_of_matrix)
   ASSERT_NO_THROW(TMatrix<int> v1(v));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(MatrixLib, can_delete_matrix)
+{
+  TMatrix<int> v(1);
+  v[0]=1;
+  ASSERT_NO_THROW(v.~TMatrix());
+}
+//-------------------------------------------------------------------------------------------------
 TEST(MatrixLib, throws_when_create_matrix_with_negative_size)
 {
   ASSERT_ANY_THROW(TMatrix<int> v(-5));

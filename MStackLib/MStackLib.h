@@ -88,6 +88,7 @@ TMStack<T>::TMStack (TMStack<T> &C)
       m[i] = new TNewStack<T>(*C.m[i]);
   }
 }
+
 //-------------------------------------------------------------------------------------------------
 template <class T>
 int TMStack<T>::CountFree ()

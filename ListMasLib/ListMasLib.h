@@ -14,6 +14,7 @@ protected:
 public:
   TListMas<T> (int n = 0);
   TListMas<T> (TListMas &A);
+  ~TListMas<T> ();
 
   void PutStart (T B);
   void PutEnd (T B);
@@ -69,6 +70,21 @@ TListMas<T>::TListMas(TListMas &A)
       mas [i] = A.mas [i];
       index [i] = A.index [i];
     }
+  }
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TListMas<T>::~TListMas<T>()
+{
+  if (size != 0)
+  {
+    delete [] mas;
+    size = 0;
+  }
+  if (count != 0)
+  {
+    delete [] index;
+    count = 0;
   }
 }
 //-------------------------------------------------------------------------------------------------

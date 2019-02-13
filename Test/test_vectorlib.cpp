@@ -15,6 +15,14 @@ TEST(VectorLib, can_create_copy_of_vector)
   ASSERT_NO_THROW (TVector<int> v1(v));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_delete_vector)
+{
+  TVector<int> v(2);
+  v[0]=1;
+  v[1]=2;  
+  ASSERT_NO_THROW (v.~TVector());
+}
+//-------------------------------------------------------------------------------------------------
 TEST(VectorLib, throws_when_create_vector_with_negative_size)
 {
   ASSERT_ANY_THROW (TVector<int> v(-5));

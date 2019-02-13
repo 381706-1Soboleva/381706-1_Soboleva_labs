@@ -18,6 +18,12 @@ TEST(QueueLib, can_copy_queue)
   ASSERT_NO_THROW (TQueue<int> s(A));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(QueueLib, can_delete_queue)
+{
+  TQueue<int> A(5);
+  ASSERT_NO_THROW (A.~TQueue());
+}
+//-------------------------------------------------------------------------------------------------
 TEST (QueueLib, can_put_to_queue)
 {
   TQueue<int> A(4);

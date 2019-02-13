@@ -15,6 +15,14 @@ TEST(ListMasLib, can_create_copy_of_listmas)
   ASSERT_NO_THROW (TListMas<int> v(c));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(ListMasLib, can_delete_listmas)
+{
+	TListMas<int> v(5);
+	v.PutStart(2);
+  ASSERT_NO_THROW (v.~TListMas());
+}
+
+//-------------------------------------------------------------------------------------------------
 TEST(ListMasLib, can_put_start)
 {
   TListMas<int> c(10);

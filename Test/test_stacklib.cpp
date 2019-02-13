@@ -18,6 +18,12 @@ TEST(StackLib, can_copy_stack)
   ASSERT_NO_THROW (TStack<int> s(A));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(StackLib, can_delete_stack)
+{
+  TStack<int> s(1);
+  ASSERT_NO_THROW (s.~TStack());
+}
+//-------------------------------------------------------------------------------------------------
 TEST (StackLib, can_put_to_stack)
 {
   TStack<int> A(4);

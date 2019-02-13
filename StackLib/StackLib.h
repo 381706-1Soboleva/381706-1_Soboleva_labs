@@ -14,6 +14,7 @@ protected:
 public:
   TStack<T> (int s = 0);
   TStack<T> (TStack<T> &A);
+  ~TStack<T> ();
 
   void Put(T A);
   T Get();
@@ -52,6 +53,16 @@ TStack<T>::TStack(TStack<T> &A)
     m = new T [size];
     for (int i = 0; i < size; i++)
       m[i] = A.m[i];
+  }
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TStack<T>::~TStack<T>()
+{
+  if (size != 0)
+  {
+    delete [] m;
+    size = 0;
   }
 }
 //-------------------------------------------------------------------------------------------------

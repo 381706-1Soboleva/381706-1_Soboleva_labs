@@ -13,6 +13,7 @@ protected:
 public:
   TQueue<T> (int _size = 0);
   TQueue<T> (TQueue <T> &A);
+  ~TQueue<T> ();
 
   void Put(T A);
   T Get();
@@ -42,6 +43,16 @@ TQueue<T>::TQueue(TQueue <T> &A): TStack<T>(A.size)
   this->m = new T [A.size];
   for (int i = 0 ; i < this->size; i++)
     this->m[i] = A.m[i];
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TQueue<T>::~TQueue<T> ()
+{
+  if (this->size != 0)
+  {
+    delete [] this->m;
+    this->size = 0;
+  }
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
