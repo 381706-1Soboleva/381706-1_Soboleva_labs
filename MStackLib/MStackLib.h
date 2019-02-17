@@ -98,7 +98,7 @@ TMStack<T>::~TMStack ()
   if (n > 0)
   {
     for (int i = 0; i < n; i++)
-      if (m[i] > 0)
+      if (m[i] != 0)
         m[i] = 0;
     delete [] m;
   }
