@@ -31,6 +31,7 @@ public:
   TVector<T> operator+ (const TVector &v); 
   TVector<T> operator- (const TVector &v);
   TVector<T> operator* (const TVector &v); 
+	TVector<T> operator/ (const TVector &v);
 
   
   friend istream & operator>>( istream &in, TVector<T> &v)
@@ -216,6 +217,21 @@ TVector<T> TVector<T>::operator * (const TVector<T> &v)
   {
     for (int i = 0; i < size ; i++)  
       A.vector[i] = vector[i] * v.vector[i];
+    return A;
+  }
+  else throw 2;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TVector<T> TVector<T>::operator / (const TVector<T> &v)
+{
+  TVector<T> A;
+  A.size = size;
+  A.vector = new T [size];
+  if (size == v.size)
+  {
+    for (int i = 0; i < size ; i++)  
+      A.vector[i] = vector[i] / v.vector[i];
     return A;
   }
   else throw 2;

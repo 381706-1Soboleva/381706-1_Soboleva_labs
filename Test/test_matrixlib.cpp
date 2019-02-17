@@ -157,3 +157,24 @@ TEST(MatrixLib, can_mult_matrixs_with_equal_size)
   TMatrix<int> v(5), v1(5);
   ASSERT_NO_THROW(v*v1);
 }
+//-------------------------------------------------------------------------------------------------
+TEST(MatrixLib, can_div_matrix_and_matrix)
+{
+  TMatrix<int> v(1), v1(1);
+  v[0][0]=20;
+  v1[0][0]=4;
+  v=v/v1;
+  EXPECT_EQ(5,v[0][0]);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(MatrixLib, throws_when_div_matrixs_with_different_size)
+{
+  TMatrix<int> v(1), v1(5);
+  ASSERT_ANY_THROW(v/v1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(MatrixLib, can_div_matrixs_with_equal_size)
+{
+  TMatrix<int> v(5), v1(5);
+  ASSERT_NO_THROW(v/v1);
+}

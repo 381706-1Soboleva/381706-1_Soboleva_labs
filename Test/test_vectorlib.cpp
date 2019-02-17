@@ -182,3 +182,25 @@ TEST(VectorLib, can_mult_vectors_with_equal_size)
   TVector<int> v(5), v1(5);
   ASSERT_NO_THROW (v * v1);
 }
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_div_vector_and_vector)
+{
+  TVector<int> v(1), v1(1);
+  v[0] = 16;
+  v1[0] = 4;
+  v = v / v1;
+  EXPECT_EQ (4, v[0]);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, throws_when_div_vectors_with_different_size)
+{
+  TVector<int> v(1), v1(5);
+  ASSERT_ANY_THROW (v / v1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(VectorLib, can_div_vectors_with_equal_size)
+{
+  TVector<int> v(5), v1(5);
+  ASSERT_NO_THROW (v / v1);
+}
+
