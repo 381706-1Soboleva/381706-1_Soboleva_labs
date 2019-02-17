@@ -18,7 +18,7 @@ public:
   TMatrix<T> operator+ (const TMatrix<T> &mt); 
   TMatrix<T> operator- (const TMatrix<T> &mt); 
   TMatrix<T> operator* (const TMatrix<T> &mt);
-	TMatrix<T> operator/ (const TMatrix<T> &mt);
+  TMatrix<T> operator/ (const TMatrix<T> &mt);
 
   template <class T1>
   friend istream & operator>>( istream &in, TMatrix<T1> &mt) 

@@ -18,8 +18,10 @@ public:
 
   void Put(T A);
   T Get();
+	T Top();
   bool IsFull();
   bool IsEmpty();
+	int GetSize();
 };
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -90,6 +92,17 @@ T TStack<T>::Get()
   }
 }
 //-------------------------------------------------------------------------------------------------
+template<class T>
+T TStack<T>::Top()
+{
+  if (IsEmpty())
+    throw -2;
+  else 
+  {
+    return m[top - 1];
+  }
+}
+//-------------------------------------------------------------------------------------------------
 template <class T>
 bool TStack<T>::IsFull()
 {
@@ -106,4 +119,10 @@ bool TStack<T>::IsEmpty()
     return true;
   else
     return false;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+int TStack<T>::GetSize()
+{
+  return size;
 }

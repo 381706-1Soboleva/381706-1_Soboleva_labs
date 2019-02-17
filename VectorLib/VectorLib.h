@@ -31,7 +31,7 @@ public:
   TVector<T> operator+ (const TVector &v); 
   TVector<T> operator- (const TVector &v);
   TVector<T> operator* (const TVector &v); 
-	TVector<T> operator/ (const TVector &v);
+  TVector<T> operator/ (const TVector &v);
 
   
   friend istream & operator>>( istream &in, TVector<T> &v)
