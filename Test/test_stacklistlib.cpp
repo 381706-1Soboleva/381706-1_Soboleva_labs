@@ -16,6 +16,13 @@ TEST(TStackList, throws_with_negative_size)
   ASSERT_ANY_THROW(TStackList<int> A(-1));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(TStackList, can_delete_stack)
+{
+  TStackList<int> A;
+  A.Put(15);
+  ASSERT_NO_THROW(A.~TStackList());
+}
+//-------------------------------------------------------------------------------------------------
 TEST(TStackList, can_create_copy)
 {
   TStackList<int> S(1);

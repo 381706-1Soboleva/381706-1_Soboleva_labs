@@ -15,6 +15,7 @@ protected:
 public:
   TMStack<T> (int _n = 0, int l = 0);
   TMStack<T> (TMStack<T> &A);
+  ~TMStack<T> ();
 
   T Get (int i);
   void Put (int i, T A);
@@ -88,6 +89,22 @@ TMStack<T>::TMStack (TMStack<T> &C)
       m[i] = new TNewStack<T>(*C.m[i]);
   }
 }
+//-------------------------------------------------------------------------------------------------
+template <class T>
+TMStack<T>::~TMStack ()
+{
+  if (size > 0)
+    delete [] mas;
+  if (n > 0)
+  {
+    for (int i = 0; i < n; i++)
+      if (m[i] > 0)
+        m[i] = 0;
+    delete [] m;
+  }
+  size = 0;
+  n = 0;
+}
 
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -111,7 +128,9 @@ void TMStack<T>::Repack(int k)
     T** new_start = new T* [n];
     T** old_start = new T* [n];
     for (int i = 0; i < n; i++)
-      new_size[i] = (int)(fm / n) + m[i]->GetSize();
+      new_size[i] = m[i]->GetSize() - m[i]->CountFreeE();
+    for (int i = 0; i < n; i++)
+      new_size[i] += (int)(fm / n) ;
     new_size[k] += fm % n;
     new_start[0] = old_start[0] = mas;
     for (int i = 1; i < n; i++)

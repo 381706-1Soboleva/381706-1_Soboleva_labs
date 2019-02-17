@@ -13,12 +13,15 @@ protected:
 public:
   TList<T> ();
   TList<T> (TList<T>& A);
+  ~TList<T> ();
 
   void PutBegin(T A);
   void PutEnd(T A);
+  void Put(int _n, T elem);
 
   T GetBegin();
   T GetEnd();
+  T Get(int _n);
   int GetCount();
 
   bool IsFull();
@@ -51,6 +54,17 @@ TList<T>::TList(TList<T> &A)
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
+TList<T>::~TList()
+{
+ while (begin != 0)
+  {
+    TElem<T>* temp = begin;
+    begin = begin->GetNext();
+    delete temp;
+  }
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
 void TList<T>::PutBegin(T A)
 {
     TElem<T>* tmp = new TElem<T>(A, begin);
@@ -69,6 +83,25 @@ void TList<T>::PutEnd(T A)
   }
   else
     begin = new TElem<T>(A, 0);
+}
+//-------------------------------------------------------------------------------------------------
+template<class T>
+void TList<T>::Put(int _n, T elem)
+{
+  if (_n < 1 || _n > (this->GetCount() - 1))
+    throw -1;
+  else
+  {
+    int i = 0;
+    TElem<T>* a = begin;
+    while (i != _n - 1)
+    {
+      a = a->GetNext();
+      i++;
+    }
+    TElem<T>* temp = new TElem<T>(elem, a->GetNext());
+    a->SetNext(temp);
+  }
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -106,7 +139,7 @@ T TList<T>::GetBegin()
   else
   {
     T tmp = begin->GetD();
-    begin = begin->GetNext();
+    begin = a->GetNext();
     delete a;
     return tmp;
   }
@@ -115,32 +148,83 @@ T TList<T>::GetBegin()
 template <class T>
 T TList<T>::GetEnd()
 {
-  TElem<T>* a = begin;
-  if (IsEmpty())
+  if (this->IsEmpty())
     throw -3;
   else
   {
-    while (a->GetNext() != 0)
-      a->GetNext();
-    T tmp = a->GetD();
-    delete a;
-    return tmp;
+    TElem<T>* a = begin;
+    TElem<T>* b = begin->GetNext();
+    if (b == 0)
+    {
+      T temp = a->TElem<T>::GetD();
+      delete a;
+      begin = 0;
+      return temp;
+    }
+    else
+    {
+      while (b->GetNext() != 0)
+      {
+        a = b;
+        b = b->GetNext();
+      }
+      T temp = b->GetD();
+      delete b;
+      a->SetNext(0);
+      return temp;
+    }
+  }
+}
+//-------------------------------------------------------------------------------------------------
+template<class T>
+T TList<T>::Get(int _n)
+{
+  if (this->IsEmpty())
+    throw -3;
+  if (_n < 1 || _n > this->GetCount()-1)
+    throw -1;
+  else
+  {
+    int i = 0;
+    TElem<T>* a = begin;
+    TElem<T>* b = begin->GetNext();
+    while (i != _n - 1)
+    {
+      a = b;
+      b = b->GetNext();
+      i++;
+    }
+    T temp = b->GetD();
+    a->SetNext(b->GetNext());
+    delete b;
+    return temp;
   }
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 int TList<T>::GetCount()
 {
-  int count = 1;
-  TElem<T>* a = begin;
+  int count = 2;
+  
   if (IsEmpty())
     return 0;
   else 
-    while (a->GetNext() != 0)
+    if (begin->GetNext() == 0)
     {
-      a = a->GetNext();
-      count++;
+      return 1;
     }
-    delete a;
-    return count;
+    else
+    {
+      TElem<T>* a = begin;
+      TElem<T>* b = begin->GetNext();
+      while (b->GetNext() != 0)
+      {
+        a = b;
+        b = b->GetNext();
+      }
+      T temp = b->GetD();
+      delete b;
+      a->SetNext(0);
+      return count;
+    }
 }

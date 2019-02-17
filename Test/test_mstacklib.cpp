@@ -22,6 +22,12 @@ TEST (MStackLib, throws_when_create_mstack_with_negative_n)
   ASSERT_ANY_THROW (TMStack<int> s(5, -7));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(MStackLib, can_delete_mstack)
+{
+  TMStack<int> s(3,6);
+  ASSERT_NO_THROW (s.~TMStack());
+}
+//-------------------------------------------------------------------------------------------------
 TEST (MStackLib, can_put_to_mstack)
 {
   TMStack<int> A(4,5);

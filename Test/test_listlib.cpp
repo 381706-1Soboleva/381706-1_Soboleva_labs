@@ -15,6 +15,13 @@ TEST(ListLib, can_create_copy_of_list)
   ASSERT_NO_THROW (TList<int> v(c));
 }
 //-------------------------------------------------------------------------------------------------
+TEST(ListLib, can_delete_list)
+{
+  TList<int> c;
+  c.PutBegin(6);
+  ASSERT_NO_THROW (c.~TList());
+}
+//-------------------------------------------------------------------------------------------------
 TEST(ListLib, can_put_begin)
 {
   TList<int> c;
@@ -88,13 +95,28 @@ TEST (ListLib, can_get_count)
   A.PutBegin(3);
   EXPECT_EQ (2, A.GetCount());
 }
-/*
 //-------------------------------------------------------------------------------------------------
-TEST(ListLib, can_get_elem)
+TEST (ListLib, can_put)
 {
-  TList<int> c;
-  int a = 0;
-  int *b = &a;
-  ASSERT_NO_THROW (a = c.GetElem(b));
+  TList<int> A;
+  A.PutBegin(5);
+  A.PutBegin(3);
+  ASSERT_NO_THROW (A.Put(1,7));
 }
-*/
+//-------------------------------------------------------------------------------------------------
+TEST (ListLib, throws_when_get_from_empty)
+{
+  TList<int> A;
+  ASSERT_ANY_THROW (A.Get(2));
+}
+//-------------------------------------------------------------------------------------------------
+TEST (ListLib, can_get)
+{
+  TList<int> A;
+  A.PutBegin(5);
+  A.PutBegin(3);
+  A.PutBegin(7);
+  ASSERT_NO_THROW (A.Get(1));
+}
+
+//-------------------------------------------------------------------------------------------------

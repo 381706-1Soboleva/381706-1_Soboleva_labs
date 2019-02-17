@@ -11,8 +11,9 @@ protected:
 
 public:
 
-  TStackList<T>(int _size = 10);
-  TStackList<T>(TStackList<T> &A);
+  TStackList<T> (int _size = 10);
+  TStackList<T> (TStackList<T> &A);
+  ~TStackList<T> ();
 
   void Put(T A);
   T Get();
@@ -35,6 +36,20 @@ template <class T>
 TStackList<T>::TStackList(TStackList<T> &A) : TList<T>(A)
 {
   count = A.GetCount();
+}
+//-----------------------------------------------------------------
+template <class T>
+TStackList<T>::~TStackList()
+{
+  if (size != 0)
+    while (this->begin != 0)
+  {
+    TElem<T>* temp = this->begin;
+    this->begin = (this->begin)->GetNext();
+    delete temp;
+  }
+  size = 0;
+  count = 0;
 }
 //-----------------------------------------------------------------
 template <class T>

@@ -32,7 +32,6 @@ TNewStack<T>::TNewStack (TNewStack<T> &A)
   this->m = A.m;
   this->top = A.top;
 }
-
 //-------------------------------------------------------------------------------------------------
 template <class T>
 void TNewStack<T>::SetM (int n, T* mas)
