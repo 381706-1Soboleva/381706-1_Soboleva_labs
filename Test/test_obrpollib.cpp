@@ -15,7 +15,7 @@ TEST(ObrPol, can_get_priority)
 //-------------------------------------------------------------------------------------------------
 TEST(ObrPol, throws_when_get_priority_of_uncorrect_symbol)
 {
-  ASSERT_ANY_THROW(GetPrior('Ё'));
+  ASSERT_ANY_THROW(GetPrior('k'));
 }
 //-------------------------------------------------------------------------------------------------
 TEST(ObrPol, can_add)
