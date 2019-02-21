@@ -18,10 +18,10 @@ public:
 
   void Put(T A);
   T Get();
-	T Top();
+  T Top();
   bool IsFull();
   bool IsEmpty();
-	int GetSize();
+  int GetSize();
 };
 //-------------------------------------------------------------------------------------------------
 template <class T>

@@ -19,6 +19,7 @@ public:
   T Get();
   bool IsFull();
   bool IsEmpty();
+  T Start();
 };
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -48,11 +49,7 @@ TQueue<T>::TQueue(TQueue <T> &A): TStack<T>(A.size)
 template <class T>
 TQueue<T>::~TQueue<T> ()
 {
-  if (this->size != 0)
-  {
-    delete [] this->m;
-    this->size = 0;
-  }
+  start = size = 0;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
@@ -66,7 +63,7 @@ bool TQueue<T>::IsFull()
 template <class T>
 bool TQueue<T>::IsEmpty()
 {
-  if (this->top - start == 0)
+  if (this->top == start)
     return true;
   else return false;
 }
@@ -90,8 +87,19 @@ T TQueue<T>::Get()
     throw -3;
   else
   {
-    return this->m[start];
     start++;
+    return this->m[start-1];
     this->top++;
+  }
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+T TQueue<T>::Start()
+{
+  if (IsEmpty())
+    throw -3;
+  else
+  {
+    return this->m[start];
   }
 }

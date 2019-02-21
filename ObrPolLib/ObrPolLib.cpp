@@ -1,39 +1,33 @@
-#include "ObrPolLib.h"
+﻿#include "ObrPolLib.h"
 #include <cstdlib>
 
-int GetPrt(const char op)
+int GetPrior(const char op)
 {
   switch (op)
   {
-  case '(':
+  case '(': case ')':
     return 1;
-  case ')':
-    return 1;
-  case '+':
+  case '+': case '-':
     return 2;
-  case '-':
-    return 2;
-  case '*':
-    return 3;
-  case '/':
+  case '*':   case '/':
     return 3;
   default:
-    throw 1;
+    throw -1;
   }
-}//-----------------------------------------------------------------
-
-bool IsOp(char a)
+}
+//-------------------------------------------------------------------------------------------------
+bool IsOperation(char a)
 {
   return (a == '+' || a == '-' || a == '*' || a == '/' || a == '(' || a == ')');
-}//-----------------------------------------------------------------
-
-TQueue<char> ConvertToPol(TString s)
+}
+//--------------------------------------------------------------------------------------------------
+TQueue<char> ToObrPol(TString s)
 {
   int open = 0;
   int close = 0;
-  TQueue<char> Q(s.GetLength() * 3);
-  TStack<char> S(s.GetLength() * 3);
-  for (int i = 0; i < s.GetLength(); i++)
+  TQueue<char> Q(s.GetLen() * 3);
+  TStack<char> S(s.GetLen() * 3);
+  for (int i = 0; i < s.GetLen(); i++)
   {
     if (i == 0)
     {
@@ -43,14 +37,14 @@ TQueue<char> ConvertToPol(TString s)
         Q.Put('0');
         Q.Put(']');
       }
-      else if (IsOp(s[0]))
-        if (GetPrt(s[0]) != 1)
+      else if (IsOperation(s[0]))
+        if (GetPrior(s[0]) != 1)
           throw 1;
     }
     if (isdigit(s[i]))
     {
       Q.Put('[');
-      while ((i < s.GetLength()) && isdigit(s[i + 1]))
+      while ((i < s.GetLen()) && isdigit(s[i + 1]))
       {
         Q.Put(s[i]);
         i++;
@@ -58,7 +52,7 @@ TQueue<char> ConvertToPol(TString s)
       Q.Put(s[i]);
       Q.Put(']');
     }
-    else if (S.IsEmpty() && IsOp(s[i]))
+    else if (S.IsEmpty() && IsOperation(s[i]))
     {
       S.Put(s[i]);
       if (s[i] == '(')
@@ -66,7 +60,7 @@ TQueue<char> ConvertToPol(TString s)
       if (s[i] == ')')
         throw 1;
     }
-    else if (IsOp(s[i]))
+    else if (IsOperation(s[i]))
     {
       if (s[i] == '(')
       {
@@ -82,12 +76,12 @@ TQueue<char> ConvertToPol(TString s)
       }
       else
       {
-        int p = GetPrt(s[i]);
-        if (p > GetPrt(S.Top()))
+        int p = GetPrior(s[i]);
+        if (p > GetPrior(S.Top()))
           S.Put(s[i]);
-        else if (p <= GetPrt(S.Top()))
+        else if (p <= GetPrior(S.Top()))
         {
-          while (!S.IsEmpty() && p <= GetPrt(S.Top()))
+          while (!S.IsEmpty() && p <= GetPrior(S.Top()))
             Q.Put(S.Get());
           S.Put(s[i]);
         }
@@ -101,13 +95,13 @@ TQueue<char> ConvertToPol(TString s)
   if (open != close)
     throw 1;
   return Q;
-}//-----------------------------------------------------------------
-
-double Rez(TQueue<char> q)
+}
+//-------------------------------------------------------------------------------------------------
+double Result(TQueue<char> q)
 {
   double res = 0;
   TStack<double> S(q.GetSize());
-  if (IsOp(q.Top()))
+  if (!IsOperation(q.Top()))
     throw 1;
   int i = 0;
   int dit = 0;
@@ -121,7 +115,7 @@ double Rez(TQueue<char> q)
       dit++;
       A = q.Get();
       double tmp = std::atof(&A);
-      while (q.Top() != ']' && !q.IsEmpty())
+      while (q.Start() != ']')
       {
         A = q.Get();
         tmp = tmp * 10 + std::atof(&A);
@@ -129,7 +123,7 @@ double Rez(TQueue<char> q)
       q.Get();
       S.Put(tmp);
     }
-    else if (IsOp(A))
+    else if (IsOperation(A))
     {
       double B = S.Get();
       double C = S.Get();
@@ -144,7 +138,7 @@ double Rez(TQueue<char> q)
         D = C / B;
       S.Put(D);
     }
-    else 
+    else
       throw 1;
     if (i == 2 && dit != 2)
       throw 1;
@@ -153,4 +147,4 @@ double Rez(TQueue<char> q)
   if (!S.IsEmpty())
     throw 1;
   return res;
-}//-----------------------------------------------------------------
+}

@@ -1,28 +1,29 @@
-#include "StringLib.h"
+﻿#include "StringLib.h"
+#include <cstdlib>
 
 TString::TString()
 {
-	s = 0;
-	length = 0;
-}// ---------------------------------------------------------------------------
-
+  s = 0;
+  len = 0;
+}
+//-------------------------------------------------------------------------------------------------
 TString::TString(TString &A)
 {
-	length = A.length;
-	if (length != 0)
-	{
-		s = new char[length];
-		for (int i = 0; i < length; i++)
-			s[i] = A.s[i];
-	}
-	else
-		s = 0;
-}// ---------------------------------------------------------------------------
-
-TString::TString(char* a) 
+  len = A.len;
+  if (len != 0)
+  {
+    s = new char[len];
+    for (int i = 0; i < len; i++)
+      s[i] = A.s[i];
+  }
+  else
+    s = 0;
+}
+//-------------------------------------------------------------------------------------------------
+TString::TString(char* a)
 {
   if (a == 0)
-    throw -1;
+    throw 1;
   if (a[0] == '\0')
     return;
   char x = 1;
@@ -33,76 +34,41 @@ TString::TString(char* a)
     x = a[size];
   }
 
-  length = size + 1; 
-  s = new char[length];
-  for (int i = 0; i < length - 1; i++)
+  len = size + 1;
+  s = new char[len];
+  for (int i = 0; i < len - 1; i++)
     s[i] = a[i];
-  s[length - 1] = 0;
-}// ---------------------------------------------------------------------------
-
+  s[len - 1] = 0;
+}
+//-------------------------------------------------------------------------------------------------
 TString::~TString()
 {
-	if (s != 0)
-		delete [] s;
-}// ---------------------------------------------------------------------------
-
-int TString::GetLength()
+  if (s != 0)
+    delete[] s;
+}
+//-------------------------------------------------------------------------------------------------
+int TString::GetLen()
 {
-	return length;
-}// ---------------------------------------------------------------------------
-
+  return len;
+}
+//-------------------------------------------------------------------------------------------------
 void TString::DeleteS()
 {
-	if (s != 0)
-		delete [] s;
-}// ---------------------------------------------------------------------------
-
-TString TString::operator+(TString &A)
-{
-	TString B;
-	B.length = length + A.length - 1; 
-	B.s = new char[B.length];
-	for (int i = 0; i < length - 1; i++)
-		B.s[i] = s[i];
-	for (int i = length - 1; i < B.length; i++)
-		B.s[i] = A.s[i - (length - 1)];
-	return B;
-}// ---------------------------------------------------------------------------
-
-TString& TString::operator=(TString &A)
-{
-	if (this != &A)
-	{
-		length = A.length;
-		if (length != 0)
-		{
-			if (s != 0)
-				delete[]s;
-			s = new char[A.length];
-			for (int i = 0; i < A.length; i++)
-				s[i] = A.s[i];
-		}
-		else
-		{
-			if (s != 0)
-				delete[]s;
-			s = 0;
-		}
-	}
-	return *this;
-}// ---------------------------------------------------------------------------
-
+  if (s != 0)
+    delete[] s;
+}
+//-------------------------------------------------------------------------------------------------
 char& TString::operator[](int i)
 {
-  if ((i >= 0) && (i < length))
+  if ((i >= 0) && (i < len))
     return s[i];
-  throw -1;
-}// ---------------------------------------------------------------------------
-
+  throw 1;
+}
+//-------------------------------------------------------------------------------------------------
 std::istream& operator>>(std::istream &A, TString &B)
 {
-	char s[256] = {0};
-	A >> s;
+  char s[256] = { 0 };
+  A >> s;
 
   char x = 1;
   int size = 0;
@@ -112,16 +78,17 @@ std::istream& operator>>(std::istream &A, TString &B)
     x = s[size];
   }
 
-	B.length = size + 1;
-	B.s = new char[B.length];
-	for (int i = 0; i < B.length - 1; i++)
-		B.s[i] = s[i];
-	B.s[B.length - 1] = 0;
-	return A;
-}// ---------------------------------------------------------------------------
-
+  B.len = size + 1;
+  B.s = new char[B.len];
+  for (int i = 0; i < B.len - 1; i++)
+    B.s[i] = s[i];
+  B.s[B.len - 1] = 0;
+  return A;
+}
+//-------------------------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream &A, const TString &B)
 {
-	A << B.s;
-	return A;
-}// ---------------------------------------------------------------------------
+  A << B.s;
+  return A;
+}
+//-------------------------------------------------------------------------------------------------
