@@ -49,7 +49,8 @@ TQueue<T>::TQueue(TQueue <T> &A): TStack<T>(A.size)
 template <class T>
 TQueue<T>::~TQueue<T> ()
 {
-  start = size = 0;
+  start = 0;
+  this->size = 0;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
