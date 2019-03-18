@@ -11,10 +11,20 @@ set (MatrixLib MatrixLib)
 set (Matrix Matrix)
 set (StackLib StackLib)
 set (Stack Stack)
+set (MStackLib MStackLib)
+set (MStack MStack)
 set (QueueLib QueueLib)
 set (Queue Queue)
 set (ListLib ListLib)
 set (List List)
+set (ListMasLib ListMasLib)
+set (ListMas ListMas)
+set (PolyLib PolyLib)
+set (Poly Poly)
+set (StackListLib StackListLib)
+set (StackList StackList)
+set (ObrPolLib ObrPolLib)
+set (ObrPol ObrPol)
 
 
 
@@ -31,8 +41,13 @@ include_directories (
 ${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 ${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
 ${CMAKE_CURRENT_SOURCE_DIR}/StackLib
+${CMAKE_CURRENT_SOURCE_DIR}/MStackLib
 ${CMAKE_CURRENT_SOURCE_DIR}/QueueLib
 ${CMAKE_CURRENT_SOURCE_DIR}/ListLib
+${CMAKE_CURRENT_SOURCE_DIR}/ListMasLib
+${CMAKE_CURRENT_SOURCE_DIR}/StackListLib
+${CMAKE_CURRENT_SOURCE_DIR}/PolyLib
+${CMAKE_CURRENT_SOURCE_DIR}/ObrPolLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) #чтобы не указывать полные пути до ашников
 
@@ -46,10 +61,20 @@ add_subdirectory(MatrixLib)
 add_subdirectory(Matrix)
 add_subdirectory(StackLib)
 add_subdirectory(Stack)
+add_subdirectory(MStackLib)
+add_subdirectory(MStack)
 add_subdirectory(QueueLib)
 add_subdirectory(Queue)
 add_subdirectory(ListLib)
 add_subdirectory(List)
+add_subdirectory(ListMasLib)
+add_subdirectory(ListMas)
+add_subdirectory(StackListLib)
+add_subdirectory(StackList)
+add_subdirectory(PolyLib)
+add_subdirectory(Poly)
+add_subdirectory(ObrPolLib)
+add_subdirectory(ObrPol)
 add_subdirectory(Test)
 add_subdirectory(gtest)
 
