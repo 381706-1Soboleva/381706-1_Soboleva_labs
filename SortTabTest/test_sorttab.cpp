@@ -51,7 +51,7 @@ TEST (SortTabLib, get_index_gives_right_answer)
   TSortTab<int> A(4);
   A.Put("kif", 98);
 	int k = A.Index("kif");
-  ASSERT_NO_THROW (0, k);
+  EXPECT_EQ (0, k);
 }
 //-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, can_get_from_tab)
