@@ -1,7 +1,6 @@
 #include "SortTabLib.h"
 
 #include <gtest.h>
-#include <locale>
 
 TEST(SortTabLib, can_create_tab_with_positive_size)
 {
@@ -61,7 +60,6 @@ TEST (SortTabLib, can_get_from_tab)
 	int k;
   ASSERT_NO_THROW (k = A["kif"]);
 }
-
 //-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, get_gives_right_answer)
 {
