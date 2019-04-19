@@ -19,17 +19,39 @@ TEST(SortTabLib, can_copy_tab)
   ASSERT_NO_THROW (TSortTab<int> s(A));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_put_to_tab)
+TEST (SortTabLib, can_put_string_to_tab)
 {
   TSortTab<int> A(4);
   ASSERT_NO_THROW (A.Put("kig", 7));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, resize_when_put_to_full_tab)
+TEST (SortTabLib, can_put_elem_to_tab)
+{
+  TSortTab<int> A(4);
+	TSElem<int> b("jk", 7);
+  ASSERT_NO_THROW (A.Put(b));
+}
+//-------------------------------------------------------------------------------------------------
+TEST (SortTabLib, can_resize)
 {
   TSortTab<int> A(1);
-  A.Put("iun", 5);
-  ASSERT_NO_THROW (A.Put("dhj", 7));
+  ASSERT_NO_THROW (A.Resize());
+}
+//-------------------------------------------------------------------------------------------------
+TEST (SortTabLib, can_get_index)
+{
+  TSortTab<int> A(4);
+  A.Put("kif", 98);
+	int k;
+  ASSERT_NO_THROW (k = A.Index("kif"));
+}
+//-------------------------------------------------------------------------------------------------
+TEST (SortTabLib, get_index_gives_right_answer)
+{
+  TSortTab<int> A(4);
+  A.Put("kif", 98);
+	int k = A.Index("kif");
+  ASSERT_NO_THROW (0, k);
 }
 //-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, can_get_from_tab)
@@ -39,21 +61,7 @@ TEST (SortTabLib, can_get_from_tab)
 	int k;
   ASSERT_NO_THROW (k = A["kif"]);
 }
-//-------------------------------------------------------------------------------------------------
-TEST(SortTabLib, can_delete_from_tab)
-{
-  TSortTab<int> s(10);
-	TSElem<int> A("A", 3);
-	s.Put(A);
-	ASSERT_NO_THROW (s.Del("A"));
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, throw_for_delete_from_empty_tab_is_special)
-{
-	setlocale (LC_ALL, "Russian");
-  TSortTab<int> A(1);
-  ASSERT_NO_THROW (A.Del("kj"));
-}
+
 //-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, get_gives_right_answer)
 {
@@ -61,6 +69,14 @@ TEST (SortTabLib, get_gives_right_answer)
   A.Put("bol", 8);
 	int k = A["bol"];
 	EXPECT_EQ (8, k);
+}
+//-------------------------------------------------------------------------------------------------
+TEST(SortTabLib, can_delete_from_tab)
+{
+  TSortTab<int> s(10);
+	TSElem<int> A("A", 3);
+	s.Put(A);
+	ASSERT_NO_THROW (s.Del("A"));
 }
 //-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, isfull_gives_right_true_answer)

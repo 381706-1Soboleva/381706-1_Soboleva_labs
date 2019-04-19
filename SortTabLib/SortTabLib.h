@@ -21,6 +21,7 @@ public:
 
 	TSortTab (int _size = 0);
 	TSortTab (TSortTab& A);
+
 	void Put (string _key, T _data);
 	void Put (TSElem<T> A);
 	void Del (string _key);
