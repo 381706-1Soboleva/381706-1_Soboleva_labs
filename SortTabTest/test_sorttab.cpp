@@ -48,13 +48,6 @@ TEST(SortTabLib, can_delete_from_tab)
 	ASSERT_NO_THROW (s.Del("A"));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, throw_for_delete_from_empty_tab_is_special)
-{
-	setlocale (LC_ALL, "Russian");
-  TSortTab<int> A(1);
-  ASSERT_NO_THROW (A.Del("kj"));
-}
-//-------------------------------------------------------------------------------------------------
 TEST (SortTabLib, get_gives_right_answer)
 {
   TSortTab<int> A(2);
