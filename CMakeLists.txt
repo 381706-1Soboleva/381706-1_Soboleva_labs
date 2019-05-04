@@ -12,7 +12,7 @@ project(${PROJECT_NAME})
 #set (MatrixLib MatrixLib)
 #set (Matrix Matrix)
 
-#set (StackLib StackLib)
+set (StackLib StackLib)
 #set (Stack Stack)
 
 #set (MStackLib MStackLib)
@@ -36,13 +36,17 @@ project(${PROJECT_NAME})
 #set (ObrPolLib ObrPolLib)
 #set (ObrPol ObrPol)
 
+set (PlexLib PlexLib)
+set (Plex Plex)
+set (PlexTest PlexTest)
+
 #set (TabLib TabLib)
 #set (Tab Tab)
 #set (TabTest TabTest)
 
-set (SortTabLib SortTabLib)
-set (SortTab SortTab)
-set (SortTabTest SortTabTest)
+#set (SortTabLib SortTabLib)
+#set (SortTab SortTab)
+#set (SortTabTest SortTabTest)
 
 #set (TreeTabLib TreeTabLib)
 #set (TreeTab TreeTab)
@@ -58,7 +62,7 @@ endif()
 include_directories (
 #${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 #${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
-#${CMAKE_CURRENT_SOURCE_DIR}/StackLib
+${CMAKE_CURRENT_SOURCE_DIR}/StackLib
 #${CMAKE_CURRENT_SOURCE_DIR}/MStackLib
 #${CMAKE_CURRENT_SOURCE_DIR}/QueueLib
 #${CMAKE_CURRENT_SOURCE_DIR}/ListLib
@@ -66,8 +70,9 @@ include_directories (
 #${CMAKE_CURRENT_SOURCE_DIR}/StackListLib
 #${CMAKE_CURRENT_SOURCE_DIR}/PolyLib
 #${CMAKE_CURRENT_SOURCE_DIR}/ObrPolLib
+${CMAKE_CURRENT_SOURCE_DIR}/PlexLib
 #${CMAKE_CURRENT_SOURCE_DIR}/TabLib
-${CMAKE_CURRENT_SOURCE_DIR}/SortTabLib
+#${CMAKE_CURRENT_SOURCE_DIR}/SortTabLib
 #${CMAKE_CURRENT_SOURCE_DIR}/TreeTabLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) 
@@ -78,7 +83,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 #add_subdirectory(MatrixLib)
 #add_subdirectory(Matrix)
 
-#add_subdirectory(StackLib)
+add_subdirectory(StackLib)
 #add_subdirectory(Stack)
 
 #add_subdirectory(MStackLib)
@@ -102,13 +107,17 @@ ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 #add_subdirectory(ObrPolLib)
 #add_subdirectory(ObrPol)
 
+add_subdirectory(PlexLib)
+add_subdirectory(Plex)
+add_subdirectory(PlexTest)
+
 #add_subdirectory(TabLib)
 #add_subdirectory(Tab)
 #add_subdirectory(TabTest)
 
-add_subdirectory(SortTabLib)
-add_subdirectory(SortTab)
-add_subdirectory(SortTabTest)
+#add_subdirectory(SortTabLib)
+#add_subdirectory(SortTab)
+#add_subdirectory(SortTabTest)
 
 #add_subdirectory(TreeTabLib)
 #add_subdirectory(TreeTab)
