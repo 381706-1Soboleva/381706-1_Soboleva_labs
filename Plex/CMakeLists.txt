@@ -3,5 +3,5 @@ file(GLOB srcs "*.cpp")
 
 add_executable(${Plex} ${srcs} ${hdrs}) 
 
-target_link_libraries(${Plex} ${PlexLib})
+target_link_libraries(${Plex} ${PLexLib})
 
