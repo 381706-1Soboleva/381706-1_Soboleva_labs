@@ -1,9 +1,9 @@
 #pragma once
 #include "PointLib.h"
 #include "SectionLib.h"
-#include "StackLib.h"
 
 #include <iostream>
+#include <locale>
 
 using namespace std;
 
@@ -27,7 +27,6 @@ public:
 
   void Add (TPoint *_A, TPoint *_B);
 	TPoint* Search(TPoint *A);
-	void ChangePl(TPoint *A);
 
 };
 
@@ -105,105 +104,46 @@ TPoint* TPlex::Search(TPoint *A)
 	if ((pr == NULL)&&(pl == NULL))
 		return NULL;
 }
-
-//-------------------------------------------------------------------------------------------------
-/*void TPlex::ChangePl(TPoint *A)
-{
-	if (Search(A) != NULL)
-	{
-		if (*l == *A) 
-		{
-			TPlex *pl = new TPlex (A, A) ;
-			l = new TPlex (*pl)	;
-		}
-		else 
-		{
-			TPlex* pl = dynamic_cast <TPlex*> (l);
-			pl->ChangePl(A);
-		}
-		if (*r == *A) 
-		{
-			TPlex *pr = new TPlex (A, A) ;
-			l = new TPlex (*pr)	;
-		}	
-		else 
-		{
-			TPlex* pr = dynamic_cast <TPlex*> (r);
-			pr->ChangePl(A);
-		}
-	}
-}*/
 //-------------------------------------------------------------------------------------------------
 void TPlex::Add (TPoint* A, TPoint* B)
 {
-  /*if ((l == 0) && (r == 0))
+	
+	TPlex *pl, *pr;
+	TPoint* res;
+	pl = dynamic_cast <TPlex*> (l);
+	pr = dynamic_cast <TPlex*> (r);
+	try
 	{
-		l = _A; 
-		r = _B;
-	}
-	else
-	{ 
-		TStack<TPoint*> s1;
-		TStack<TPlex*> s2;
-		s1.Put(l);
-		s1.Put(r);
-		s2.Put(this);
-		s2.Put(this);
-		bool flag = true;
-		while ((flag) && (!s1.IsEmpty()))
+		if ((pl == 0)&&((*l == *A)||(*l == *B)))
 		{
-			TPoint* p2 = s1.Get();
-			TPoint* p1 = s1.Get();
-			TPlex *ppar = s2.Get();
-			if (*p1 == *_A)
-			{
-				if (ppar->l  == p1)
-					ppar->l = new TPlex (_B, _A);
-				else
-					ppar->r = new TPlex (_B, _A);
-				flag = false;
-			}
-			else  if (*p1 == *_B)
-			{
-				if (ppar->l  == p1)
-					ppar->l = new TPlex (_A, _B);
-				else
-					ppar->r = new TPlex (_A, _B);
-				flag = false;
-			}
-			if (*p2 == *_A)
-			{
-				if (ppar->l  == p2)
-					ppar->l = new TPlex (_B, _A);
-				else
-					ppar->r = new TPlex (_B, _A);
-				flag = false;
-			}
-			else  if (*p2 == *_B)
-			{
-				if (ppar->l  == p2)
-					ppar->l = new TPlex (_A, _B);
-				else
-					ppar->r = new TPlex (_A, _B);
-				flag = false;
-			}
-			else if ((p1 != NULL)||(p2 != NULL))
-			{
-				s1.Put(ppar->GetL());
-				s1.Put(ppar->GetR());
-				s2.Put(ppar);
-			}
-			else throw -1;
+			l = new TPlex(A,B);
 		}
-	}*/
+		else if ((pr == 0)&&((*r == *A)||(*r == *B)))
+		{
+			r =new TPlex(A,B);
+		}
+		else if (pl != 0)
+		{
+			pl->Add(A,B);
+		}
+		else if (pr != 0)
+		{
+			pr->Add(A,B);
+		}
+		else
+		throw -1;
+	}
+	catch(...)
+	{
+		cout<<"В плексе нет таких точек!!\n";
+	}
+
 }
 //-------------------------------------------------------------------------------------------------
 void TPlex::show()
 {
 	TPlex *pl, *pr;
 	cout<<"Отрезок\n";
-	TSection start(*l, *r);
-	start.show();
 	pl = dynamic_cast <TPlex*> (l);
 	pr = dynamic_cast <TPlex*> (r);
 	if (pl != 0)
@@ -221,7 +161,7 @@ void TPlex::show()
 		cout<<"Справа ";
 		pr->show();
 	}
-	 else if (pr == 0)
+	else if (pr == 0)
 	{
 		cout<<"Справа Tочка:\n";
 		r->show();

@@ -1,105 +1,88 @@
-#include "SortTabLib.h"
+#include "PlexLib.h"
 
 #include <gtest.h>
 
 
-TEST(SortTabLib, can_create_tab_with_positive_size)
+TEST(PointLib, can_create_default_point)
 {
-  ASSERT_NO_THROW (TSortTab<int> s(1));
+  ASSERT_NO_THROW (TPoint s());
+}
+
+//-------------------------------------------------------------------------------------------------
+TEST(PointLib, can_copy_point)
+{
+	TPoint s(2, 6);
+  ASSERT_NO_THROW (TPoint s1(s));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, throws_when_create_tab_with_negative_size)
+TEST(PointLib, can_compare_different_points)
 {
-  ASSERT_ANY_THROW (TSortTab<int> s(-8));
+	TPoint s(2, 6), s1(3,8);
+  EXPECT_FALSE (s1 == s);
 }
 //-------------------------------------------------------------------------------------------------
-TEST(SortTabLib, can_copy_tab)
+TEST(PointLib, can_compare_equal_points)
 {
-  TSortTab<int> A;
-  ASSERT_NO_THROW (TSortTab<int> s(A));
+	TPoint s(2, 6), s1(2,6);
+  EXPECT_TRUE (s1 == s);
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_put_string_to_tab)
+TEST(PointLib, can_assign_point)
 {
-  TSortTab<int> A(4);
-  ASSERT_NO_THROW (A.Put("kig", 7));
+	TPoint s(2, 6), s1(3,8);
+  ASSERT_NO_THROW (s1 = s);
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_put_elem_to_tab)
+TEST(SectionLib, can_create_default_section)
 {
-  TSortTab<int> A(4);
-	TSElem<int> b("jk", 7);
-  ASSERT_NO_THROW (A.Put(b));
+  ASSERT_NO_THROW (TSection s());
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_resize)
+TEST(SectionLib, can_copy_section)
 {
-  TSortTab<int> A(1);
-  ASSERT_NO_THROW (A.Resize());
+	TPoint s(2, 6), s1(3,8);
+	TSection h(s, s1);
+  ASSERT_NO_THROW (TSection l(h));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_get_index)
+TEST(PlexLib, can_create_default_plex)
 {
-  TSortTab<int> A(4);
-  A.Put("kif", 98);
-	int k;
-  ASSERT_NO_THROW (k = A.Index("kif"));
+  ASSERT_NO_THROW (TPlex s);
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, get_index_gives_right_answer)
+TEST (PlexLib, can_create_plex)
 {
-  TSortTab<int> A(4);
-  A.Put("kif", 98);
-	int k = A.Index("kif");
-  EXPECT_EQ (0, k);
+	TPoint A, B(7,4);
+	ASSERT_NO_THROW (TPlex P1(&A, &B));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_get_from_tab)
+TEST(PlexLib, can_copy_plex)
 {
-  TSortTab<int> A(4);
-  A.Put("kif", 98);
-	int k;
-  ASSERT_NO_THROW (k = A["kif"]);
+	TPoint A, B(7,4);
+  TPlex N(&A,&B);
+  ASSERT_NO_THROW (TPlex F(N));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, get_gives_right_answer)
+TEST (PlexLib, can_search_point)
 {
-  TSortTab<int> A(2);
-  A.Put("bol", 8);
-	int k = A["bol"];
-	EXPECT_EQ (8, k);
+  TPoint A, B(7,4);
+	TPoint *k;
+	TPlex s(&A,&B);
+  ASSERT_NO_THROW (k = (s.Search(&A)));
 }
 //-------------------------------------------------------------------------------------------------
-TEST(SortTabLib, can_delete_from_tab)
+TEST (PlexLib, search_gives_right_answer)
 {
-  TSortTab<int> s(10);
-	TSElem<int> A("A", 3);
-	s.Put(A);
-	ASSERT_NO_THROW (s.Del("A"));
+  TPoint A, B(7,4);
+	TPlex s(&A,&B);
+	TPoint k = *(s.Search(&A));
+  EXPECT_TRUE (A == k);
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isfull_gives_right_true_answer)
+TEST (PlexLib, can_add_point)
 {
-  TSortTab<int> A(1);
-  A.Put("kdgjh", 8);
-  EXPECT_EQ (true, A.IsFull());
+  TPoint A, B(7,4), C(0,15);
+	TPlex P(&A, &B);
+  ASSERT_NO_THROW (P.Add(&A, &C));
 }
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isfull_gives_right_false_answer)
-{
-  TSortTab<int> A(1);
-  EXPECT_EQ (false, A.IsFull());
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isempty_gives_right_true_answer)
-{
-  TSortTab<int> A(1);
-  EXPECT_EQ (true, A.IsEmpty());
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isempty_gives_right_false_answer)
-{
-  TSortTab<int> A(1);
-	A.Put("kdgjh", 8);
-  EXPECT_EQ (false, A.IsEmpty());
-}
+

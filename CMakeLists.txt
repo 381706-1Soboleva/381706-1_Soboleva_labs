@@ -12,7 +12,7 @@ project(${PROJECT_NAME})
 #set (MatrixLib MatrixLib)
 #set (Matrix Matrix)
 
-set (StackLib StackLib)
+#set (StackLib StackLib)
 #set (Stack Stack)
 
 #set (MStackLib MStackLib)
@@ -62,7 +62,7 @@ endif()
 include_directories (
 #${CMAKE_CURRENT_SOURCE_DIR}/VectorLib
 #${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib
-${CMAKE_CURRENT_SOURCE_DIR}/StackLib
+#${CMAKE_CURRENT_SOURCE_DIR}/StackLib
 #${CMAKE_CURRENT_SOURCE_DIR}/MStackLib
 #${CMAKE_CURRENT_SOURCE_DIR}/QueueLib
 #${CMAKE_CURRENT_SOURCE_DIR}/ListLib
@@ -83,7 +83,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 #add_subdirectory(MatrixLib)
 #add_subdirectory(Matrix)
 
-add_subdirectory(StackLib)
+#add_subdirectory(StackLib)
 #add_subdirectory(Stack)
 
 #add_subdirectory(MStackLib)
