@@ -36,7 +36,7 @@ project(${PROJECT_NAME})
 #set (ObrPolLib ObrPolLib)
 #set (ObrPol ObrPol)
 
-set (PlexLib PlexLib)
+set (PLexLib PLexLib)
 set (Plex Plex)
 set (PlexTest PlexTest)
 
