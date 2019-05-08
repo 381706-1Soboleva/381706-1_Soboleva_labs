@@ -16,7 +16,7 @@ protected:
   TPoint GetA();
   TPoint GetB();
 
-  TSection (TPoint _A = 0, TPoint _B = 0);
+  TSection (TPoint _A, TPoint _B);
   TSection (TSection &S);
 	virtual void show();
 
