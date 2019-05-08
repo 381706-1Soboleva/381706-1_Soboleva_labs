@@ -6,7 +6,7 @@ before_script:
   - mkdir ../build
   - cd ../build
 script:
-  - cmake ../381706-1_Soboleva_labs/
+  - cmake ../381706-1_Soboleva_labs
   - make -j
   - ./PlexTest/PlexTest
 notifications:
