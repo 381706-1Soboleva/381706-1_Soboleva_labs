@@ -77,7 +77,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/PlexLib
 ${CMAKE_CURRENT_SOURCE_DIR}/gtest
 ) 
 
-add_subdirectory(PlexLib)
+add_subdirectory(PLexLib)
 add_subdirectory(Plex)
 add_subdirectory(PlexTest)
 
