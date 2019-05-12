@@ -7,230 +7,310 @@ using namespace std;
 template <class T>
 class TTreeTab
 {
-protected:
-	TTElem<T> not_found, ;
-	TTElem<T>* mas;
+public:
+	TTElem<T>* root;
+	TTElem<T> not_found;
 	int count;
 
-public:
-	void SetSize (int _size);
-	TTElem<T>* GetMas();
-	int GetCount();
-
-	TTreeTab (string* _key, int* _data, int _size);
-	TTreeTab (int _size = 0);
+	TTreeTab ();
+  TTreeTab (int _size, string* _key, int* _data);
 	TTreeTab (TTreeTab& A);
-
-	void GetRoot();
-	void Repack();
+	
+	int Height(TTElem<T>* k);
+	void ChangeRoot();
 	void Put (string _key, T _data);
-	void Put (TTElem<T> A);
+	void Put (TTElem<T> &A);
 	void Del (string _key);
-	TTElem<T>& Search (string _key);
-	T operator[](string _key);
-	void Resize();
-	bool IsFull ();
+	TTElem<T>* Search(string _key);
+
 	bool IsEmpty();
-
-  friend ostream & operator<<( ostream &out, TTreeTab &t)
-  {
-    for (int i = 0; i < t.GetCount(); i++)
-      out<<t.mas[i]<<"\n";
-    return out;
-  }
-
 };
 
 //-------------------------------------------------------------------------------------------------
 template <class T>
-void TTreeTab<T>::SetCount(int _count)
-{
-	count = _count;
-}
-
-//-------------------------------------------------------------------------------------------------
-template <class T>
-int TTreeTab<T>::GetCount()
-{
-	return count;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-TTElem<T>* TTreeTab<T>::GetMas()
-{
-	return mas;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-TTreeTab<T>::TTreeTab(string* _key, int* _data, int _size)
+TTreeTab<T>::TTreeTab()
 {
 	count = 0;
-	root = new TElem(_key[0], _data[0]);
+	root = NULL;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-TTreeTab<T>::TTreeTab(int _size)
+TTreeTab<T>::TTreeTab(int _count, string* _key, int* _data)
 {
-	if (_size < 0)
+	if (_count < 0)
 		throw -1;
 	else
 	{
-		size = _size;
-		mas = new TTElem<T>[size];
-		count = 0;
-		for (int i = count; i < size; i++)
-			mas[i] = not_found;
+		count = _count;
+		for (int i = 0, i < count; i++)
+		{
+			TElem<T> tmp(_key, _data);
+			Put(tmp);
+		}
 	}
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 TTreeTab<T>::TTreeTab(TTreeTab& A)
 {
-	size = A.size;
 	count = A.count;
-	mas = new TTElem<T> [size];
-	for (int i = 0; i < count; i++)
-		mas[i] = A.mas[i];
-	for (int i = count; i < size; i++)
-		mas[i] = not_found;
+	root = A.root;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-int TTreeTab<T>::Index (string _key)
+int TTreeTab<T>::Height(TTElem<T>* k)
 {
-	if (IsEmpty())
-		return 0;
-	int left = 0, right = count, cur = (count)/2 ;
-	while (right - left != 1)
+	int hl = 0, hr = 0;
+	if (k == NULL)
+		return -1;
+	if (k->left != NULL)
 	{
-		if (mas[cur].GetKey() > _key)
-		{
-			right = cur;
-			cur = (left + right)/2;
-		}
-		else if (mas[cur].GetKey() < _key)
-		{
-			left = cur;
-			cur = (left + right +1)/2;
-		}
-		else return cur;
+		hl = Height(k->left) + 1;
 	}
- return cur;
+	if (k->right != NULL)
+	{
+		hr = Height(k->right) + 1;
+	}
+	if (hl >= hr)
+		return hl;
+	else 
+		return hr;
+}
+//-------------------------------------------------------------------------------------------------
+template <class T>
+void TTreeTab<T>::ChangeRoot()
+{
+	if ((Height(root->right) - Height(root->left) == 2)&&(Height(root->right->left) > Height(root->right->right)))
+	{
+		TTElem<T> *A(root), *B(root->right), *C(root->right->left);	
+		if (C->left == NULL)
+			C->left = new TTElem<T>();
+		C->left->parent = A;
+		A->right = C->left;
+		if (C->right == NULL)
+			C->right = new TTElem<T>();
+		C->right->parent = B;
+		B->left = C->right;
+		C->left = A;
+		A->parent = C;
+		C->right = B;
+		B->parent = C;
+		root = C;
+	}
+	else if ((Height(root->left)-Height(root->right) == 2)&&(Height(root->left->right) > Height(root->left->left)))
+	{
+		TTElem<T> *a(root), *b(root->left), *c(root->left->right);
+		if (c->left == NULL)
+			c->left = new TTElem<T>();
+		c->left->parent = b;
+		b->right = c->left;
+		if (c->right == NULL)
+			c->right = new TTElem<T>();
+		c->right->parent = a;
+		a->left = c->right;
+		c->left = b;
+		b->parent = c;
+		c->right = a;
+		a->parent = c;
+		root = c;
+	}
+	else if((Height(root->left)-Height(root->right) == 2)&&(Height(root->left->right) <= Height(root->left->left)))
+	{
+		TTElem<T> *a(root), *b(root->left);
+		if (b->right == NULL)
+			b->right = new TTElem<T>();
+		b->right->parent = a;
+		a->left = b->right;
+		b->right = a;
+		a->parent = b;
+		root = b;
+	}
+	else if((Height(root->right)-Height(root->left) == 2)&&(Height(root->right->left) <= Height(root->right->right)))
+	{
+		TTElem<T> *a(root), *b(root->right);
+		if (b->left == NULL)
+			b->left = new TTElem<T>();
+		b->left->parent = a;
+		a->right = b->left;
+		b->left = a;
+		a->parent = b;
+		root = b;
+	}
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 void TTreeTab<T>::Put(string _key, T _data)
 {
-	TTElem<T> tmp(_key, _data);
-	int ind = Index(_key);
-	if (IsFull())
-		Resize();
-	try
+	TTElem<T> A(_key, _data);
+	if (IsEmpty())
+	{	
+		root = new TTElem<T>(A);
+		root->left = NULL;
+		root->right = NULL;
+		count++;
+	}
+	else
 	{
-		if (Search(_key) != not_found)
-			throw -1;
-		else
+		bool flag = true;
+		TTElem<T>* tmproot = root;
+		while (flag)
 		{
-			for (int i = count; i > ind; i--)
-				mas[i] = mas[i - 1];
-			mas[ind] = tmp;
-			count++;
+			if ( _key < tmproot->key)
+			{				
+				if (tmproot->left != NULL)				
+					tmproot = tmproot->left;
+				else
+				{
+					tmproot->left = new TTElem<T> (A);
+					(tmproot->left)->parent = tmproot;
+					(tmproot->left)->left = NULL;
+					(tmproot->left)->right = NULL;
+					count++;
+					flag = false;
+				}
+			}
+			else if ( A.key > tmproot->key)
+			{
+				if (tmproot->right != NULL)
+					tmproot = tmproot->right;
+				else
+				{
+					tmproot->right = new TTElem<T> (A);
+					(tmproot->right)->parent = tmproot;
+					(tmproot->right)->left = NULL;
+					(tmproot->right)->right = NULL;
+					count++;
+					flag = false;
+				}
+			}
+			else 
+				throw -1;
 		}
 	}
-	catch (...)
-	{
-		cout<<"Ключи не могут повтряться!\n";
-	}
+	ChangeRoot();
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-void TTreeTab<T>::Put(TTElem<T> A)
+void TTreeTab<T>::Put(TTElem<T> &A)
 {
-	int ind = Index(A.GetKey());
-	if (IsFull())
-		Resize();
 	try
 	{
-		if (Search(A.GetKey()) != not_found)
-			throw -1;
-		else
+	if (IsEmpty())
+	{	
+		root = new TTElem<T>(A);
+		root->left = NULL;
+		root->right = NULL;
+		count++;
+	}
+	else
+	{
+		bool flag = true;
+		TTElem<T>* tmproot = root;
+		while (flag)
 		{
-			for (int i = count; i > ind; i--)
-				mas[i] = mas[i-1];
-			mas[ind] = A;
-			count++;
+			if ( A.key < tmproot->key)
+			{				
+				if (tmproot->left != NULL)				
+					tmproot = tmproot->left;
+				else
+				{
+					tmproot->left = new TTElem<T> (A);
+					(tmproot->left)->parent = tmproot;
+					(tmproot->left)->left = NULL;
+					(tmproot->left)->right = NULL;
+					count++;
+					flag = false;
+					
+				}
+			}
+			else if ( A.key > tmproot->key)
+			{
+				if (tmproot->right != NULL)
+					tmproot = tmproot->right;
+				else
+				{
+					tmproot->right = new TTElem<T> (A);
+					(tmproot->right)->parent = tmproot;
+					(tmproot->right)->left = NULL;
+					(tmproot->right)->right = NULL;
+					count++;
+					flag = false;
+				}
+			}
+			else 
+				throw -1;
 		}
 	}
-	catch (...)
+	ChangeRoot();
+	}
+	catch(...)
 	{
-		cout<<"Ключи не могут повтряться!\n";
+		cout<<"\nТакой ключ уже есть!\n";
 	}
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
 void TTreeTab<T>::Del(string _key)
 {
-	try
-	{
-		if (Search(_key) == not_found)
-			throw -1;
-		else
-		{
-			int ind = Index(_key);
-			Resize();
-			for (int i = ind; i < count; i++)
-				mas[i] = mas[i+1];
-			mas[count] = not_found;
-			count--;
-		}
-	}
-	catch(...)
-	{
-		cout<<"Нельзя удалить несуществующий элемент!\n";
-	}
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-TTElem<T>& TTreeTab<T>::Search(string _key)
-{
-	int ind = Index(_key);
+	TTElem<T> *k = Search(_key), *l = Search(_key)->left, *r = Search(_key)->right;
 	if (IsEmpty())
-		return not_found;
-	if (mas[ind].GetKey() == _key)
-		return mas[ind];
-	else return not_found;
+		throw -1;
+	if (Search(_key) == NULL)
+		throw -1;
+	if (Search(_key) == root)
+		root = NULL;
+	else 
+	{
+		if (k->key < k->parent->key)
+			k->parent->left = NULL;
+		else
+			k->parent->right = NULL;
+	}
+	if (l != NULL)
+		Put(*l);
+	if (r != NULL)
+		Put(*r);
+	count--;
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>
-T TTreeTab<T>::operator [] (string _key)
+TTElem<T>* TTreeTab<T>::Search(string _key)
 {
-	TTElem<T>& tmp = Search(_key);
-	if (tmp == not_found)
+	if (IsEmpty())
+		return NULL;
+	else
 	{
-		if (IsFull())
-			Resize();
-		else
+		bool flag = true;
+		TTElem<T>* tmproot = root;
+		while (flag)
 		{
-			TTElem<T> B(_key, NULL);
-			int ind = Index (B.GetKey());
-			Put(B);
-			count++;
-			return mas[ind].GetData();
+			if (_key < tmproot->key)
+			{				
+				if (tmproot->left != NULL)				
+					tmproot = tmproot->left;
+				else
+				{
+					flag = false;
+					return NULL;					
+				}
+			}
+			else if (_key > tmproot->key)
+			{
+				if (tmproot->right != NULL)
+					tmproot = tmproot->right;
+				else
+				{
+					flag = false;
+					return NULL;					
+				}
+			}
+			else
+			{
+				return tmproot;
+				flag = false;
+			}
 		}
 	}
-	else return tmp.GetData();
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-void TTreeTab<T>::Resize()
-{
-	size = size + 10;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-bool TTreeTab<T>::IsFull()
-{
-	return (size == count);
 }
 //-------------------------------------------------------------------------------------------------
 template <class T>

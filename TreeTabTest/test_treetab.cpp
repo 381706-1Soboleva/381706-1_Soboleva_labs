@@ -1,104 +1,83 @@
-#include "SortTabLib.h"
+#include "TreeTabLib.h"
 
 #include <gtest.h>
 
-TEST(SortTabLib, can_create_tab_with_positive_size)
+TEST(TreeTabLib, can_create_default_tab)
 {
-  ASSERT_NO_THROW (TSortTab<int> s(1));
+  ASSERT_NO_THROW (TTreeTab<int> s);
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, throws_when_create_tab_with_negative_size)
+TEST(TreeTabLib, can_copy_tab)
 {
-  ASSERT_ANY_THROW (TSortTab<int> s(-8));
+  TTreeTab<int> A;
+  ASSERT_NO_THROW (TTreeTab<int> s(A));
 }
 //-------------------------------------------------------------------------------------------------
-TEST(SortTabLib, can_copy_tab)
+TEST(TreeTabLib, can_count_height)
 {
-  TSortTab<int> A;
-  ASSERT_NO_THROW (TSortTab<int> s(A));
+  TTreeTab<int> A;
+	TTElem<int> b("jk", 7);
+	A.Put(b);
+	A.Put("kig", 7);
+  ASSERT_NO_THROW (int h = A.Height(A.root));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_put_string_to_tab)
+TEST(TreeTabLib, height_gives_right_answer)
 {
-  TSortTab<int> A(4);
+  TTreeTab<int> A;
+	TTElem<int> b("jk", 7);
+	A.Put(b);
+	A.Put("kig", 7);
+  EXPECT_EQ (A.Height(A.root), 1);
+}
+//-------------------------------------------------------------------------------------------------
+TEST (TreeTabLib, can_put_string_to_tab)
+{
+  TTreeTab<int> A;
   ASSERT_NO_THROW (A.Put("kig", 7));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_put_elem_to_tab)
+TEST (TreeTabLib, can_put_elem_to_tab)
 {
-  TSortTab<int> A(4);
-	TSElem<int> b("jk", 7);
+  TTreeTab<int> A;
+	TTElem<int> b("jk", 7);
   ASSERT_NO_THROW (A.Put(b));
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_resize)
+TEST (TreeTabLib, can_change_root)
 {
-  TSortTab<int> A(1);
-  ASSERT_NO_THROW (A.Resize());
+  TTreeTab<int> A;
+	TTElem<int> b("jk", 7);
+	A.Put(b);
+  ASSERT_NO_THROW (A.ChangeRoot());
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_get_index)
+TEST (TreeTabLib, can_search_in_tab)
 {
-  TSortTab<int> A(4);
+  TTreeTab<int> A;
   A.Put("kif", 98);
-	int k;
-  ASSERT_NO_THROW (k = A.Index("kif"));
+  ASSERT_NO_THROW (A.Search("kif"));
 }
+
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, get_index_gives_right_answer)
+TEST(TreeTabLib, can_delete_from_tab)
 {
-  TSortTab<int> A(4);
-  A.Put("kif", 98);
-	int k = A.Index("kif");
-  ASSERT_NO_THROW (0, k);
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, can_get_from_tab)
-{
-  TSortTab<int> A(4);
-  A.Put("kif", 98);
-	int k;
-  ASSERT_NO_THROW (k = A["kif"]);
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, get_gives_right_answer)
-{
-  TSortTab<int> A(2);
-  A.Put("bol", 8);
-	int k = A["bol"];
-	EXPECT_EQ (8, k);
-}
-//-------------------------------------------------------------------------------------------------
-TEST(SortTabLib, can_delete_from_tab)
-{
-  TSortTab<int> s(10);
-	TSElem<int> A("A", 3);
+  TTreeTab<int> s;
+	TTElem<int> A("A", 3);
 	s.Put(A);
 	ASSERT_NO_THROW (s.Del("A"));
 }
+
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isfull_gives_right_true_answer)
+TEST (TreeTabLib, isempty_gives_right_true_answer)
 {
-  TSortTab<int> A(1);
-  A.Put("kdgjh", 8);
-  EXPECT_EQ (true, A.IsFull());
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isfull_gives_right_false_answer)
-{
-  TSortTab<int> A(1);
-  EXPECT_EQ (false, A.IsFull());
-}
-//-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isempty_gives_right_true_answer)
-{
-  TSortTab<int> A(1);
+  TTreeTab<int> A;
   EXPECT_EQ (true, A.IsEmpty());
 }
 //-------------------------------------------------------------------------------------------------
-TEST (SortTabLib, isempty_gives_right_false_answer)
+TEST (TreeTabLib, isempty_gives_right_false_answer)
 {
-  TSortTab<int> A(1);
+  TTreeTab<int> A;
 	A.Put("kdgjh", 8);
   EXPECT_EQ (false, A.IsEmpty());
 }

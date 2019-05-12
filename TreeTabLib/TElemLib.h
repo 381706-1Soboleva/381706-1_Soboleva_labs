@@ -5,17 +5,9 @@ using namespace std;
 template <class T>
 class TElem
 {
-protected:
-
+public:
 	string key;
 	T data;
-
-public:
-
-	void SetKey(string _key);
-	void SetData(T _data);
-	string GetKey();
-	T GetData();
 
 	TElem (string _key = "", T _data = 0);
 	TElem (TElem &A);
@@ -39,30 +31,7 @@ public:
     return out;
   }
 };
-//-------------------------------------------------------------------------------------------------
-template <class T>
-void TElem<T>::SetKey(string _key)
-{
-	key = _key;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-void TElem<T>::SetData(T _data)
-{
-	data = _data;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-string TElem<T>::GetKey()
-{
-	return key;
-}
-//-------------------------------------------------------------------------------------------------
-template <class T>
-T TElem<T>::GetData()
-{
-	return data;
-}
+
 //-------------------------------------------------------------------------------------------------
 template <class T>
 TElem<T>::TElem (string _key, T _data)
