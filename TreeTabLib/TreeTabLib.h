@@ -42,9 +42,9 @@ TTreeTab<T>::TTreeTab(int _count, string* _key, int* _data)
 	else
 	{
 		count = _count;
-		for (int i = 0, i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
-			TElem<T> tmp(_key, _data);
+			TTElem<T> tmp(_key, _data);
 			Put(tmp);
 		}
 	}
@@ -245,7 +245,7 @@ void TTreeTab<T>::Put(TTElem<T> &A)
 	}
 	catch(...)
 	{
-		cout<<"\nÒàêîé êëþ÷ óæå åñòü!\n";
+		cout<<"\nÅ‡Å•Ä™Ã®Ã© Ä™Ã«Å£Ã· Ã³Ä‡Äº ÄºÅ„ÅˆÃ¼!\n";
 	}
 }
 //-------------------------------------------------------------------------------------------------
