@@ -9,7 +9,6 @@ class TTreeTab
 {
 public:
 	TTElem<T>* root;
-	TTElem<T> not_found;
 	int count;
 
 	TTreeTab ();
