@@ -12,7 +12,7 @@ public:
 	int count;
 
 	TTreeTab ();
-  TTreeTab (int _size, string* _key, int* _data);
+ 	TTreeTab (int _size, string* _key, int* _data);
 	TTreeTab (TTreeTab& A);
 	
 	int Height(TTElem<T>* k);
