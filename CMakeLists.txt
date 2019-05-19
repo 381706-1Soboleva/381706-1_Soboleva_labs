@@ -38,7 +38,7 @@ project(${PROJECT_NAME})
 
 set (HashTabLib TabLib)
 set (HashTab Tab)
-set (HashTabTest TabTest)
+set (HashTabTest HashTabTest)
 
 #set (SortTabLib SortTabLib)
 #set (SortTab SortTab)
