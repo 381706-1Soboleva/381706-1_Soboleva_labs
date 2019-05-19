@@ -8,6 +8,6 @@ before_script:
 script:
   - cmake ../381706-1_Soboleva_labs
   - make -j
-  - ./HashTabTest/TabTest
+  - ./HashTabTest/HashTabTest
 notifications:
   email: false
